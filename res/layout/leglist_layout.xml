@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
 
-    <ImageView
-        android:id="@+id/legImage"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="17dp"
-         />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/legName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:text="itemtext"
-        android:textSize="24sp"
-        android:layout_alignTop="@+id/legImage"
-        android:layout_toEndOf="@+id/legImage" />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/legImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="17dp"
+             />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:text="TextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/legInfo1" />
+
+        <TextView
+            android:text="TextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/legInfo2" />
+    </LinearLayout>
+
+</LinearLayout>

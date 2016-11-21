@@ -3,7 +3,6 @@ package com.example.nova.congressinfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +37,8 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
 
     public BillFragment() {
-        activeBillList = new ArrayList<Bill>();
-        newBillList=new ArrayList<Bill>();
+        activeBillList = new ArrayList<>();
+        newBillList=new ArrayList<>();
 
         ActiveTask actask = new ActiveTask();
         actask.execute("http://104.198.0.197:8080/bills?apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=50&history.active=true");
@@ -54,7 +53,7 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("tag", "CreateView");
+
 
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_bill, container, false);
         tabHost = (TabHost) layout.findViewById(android.R.id.tabhost);
