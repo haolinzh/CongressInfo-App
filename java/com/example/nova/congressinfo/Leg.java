@@ -10,13 +10,16 @@ public class Leg {
     private String party;
     private String state;
     private String district;
+    private String id;
 
-    Leg(String name,String party,String state,String district){
+    Leg(String name,String party,String state,String district,String id){
 //        this.picUrl=picUrl;
         this.name=name;
         this.party=party;
         this.state=state;
         this.district=district;
+        this.id=id;
+
     }
 
 //    public String getPicUrl() {
@@ -37,6 +40,10 @@ public class Leg {
 
     public String getDistrict() {
         return district;
+    }
+
+    public String getId(){
+        return id;
     }
 
 }

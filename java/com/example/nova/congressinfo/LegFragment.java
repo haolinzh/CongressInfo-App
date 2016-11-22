@@ -1,12 +1,14 @@
 package com.example.nova.congressinfo;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -68,6 +70,8 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         legByHouseView=(ListView) layout.findViewById(R.id.legByHouseView);
         legBySenateView=(ListView) layout.findViewById(R.id.legBySenateView);
 
+        legByStateView.setOnItemClickListener(onItemClickListener);
+
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("BY STATES").setContent(R.id.legByState));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("HOUSE").setContent(R.id.legInHouse));
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("SENATE").setContent(R.id.legInSenate));
@@ -77,6 +81,17 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         return layout;
     }
+
+    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent=new Intent(getActivity().getApplicationContext(),LegDetail.class);
+             Leg leg =(Leg) adapterView.getAdapter().getItem(i);
+             intent.putExtra("legId",leg.getId());
+            startActivity(intent);
+
+        }
+    };
 
     @Override
     public void onTabChanged(String s) {
@@ -119,8 +134,9 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
                     String legDistrict=singleLeg.getString("district");
+                    String id=singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict);
+                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
                     legList.add(l);
 
                 }
@@ -181,8 +197,9 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
                     String legDistrict=singleLeg.getString("district");
+                    String id=singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict);
+                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
                     legHouseList.add(l);
 
                 }
@@ -242,8 +259,9 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
                     String legDistrict=singleLeg.getString("district");
+                    String id=singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict);
+                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
                     legSenateList.add(l);
 
                 }
