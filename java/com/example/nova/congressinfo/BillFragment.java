@@ -1,11 +1,13 @@
 package com.example.nova.congressinfo;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -63,6 +65,10 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
         activeBillView = (ListView) layout.findViewById(R.id.listViewAcBill);
         newBillView = (ListView) layout.findViewById(R.id.listViewNewBill);
 
+        activeBillView.setOnItemClickListener(onItemClickListener);
+        newBillView.setOnItemClickListener(onItemClickListener);
+
+
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("ACTIVE BILLS").setContent(R.id.tabActive));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("NEW BILLS").setContent(R.id.tabNew));
 
@@ -72,6 +78,18 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
 
     }
+
+
+    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent=new Intent(getActivity().getApplicationContext(),BillDetail.class);
+            Bill bill =(Bill) adapterView.getAdapter().getItem(i);
+            intent.putExtra("billId",bill.getBillId());
+            startActivity(intent);
+
+        }
+    };
 
     @Override
     public void onTabChanged(String s) {
@@ -109,7 +127,7 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
                     JSONObject singleBill=billRes.getJSONObject(i);
 
-                    String billId=singleBill.getString("bill_id");
+                    String billId=singleBill.getString("bill_id").toUpperCase();
                     String billTitle=singleBill.getString("official_title");
                     String billDate=singleBill.getString("introduced_on");
                     Bill b=new Bill(billId,billTitle,billDate);
@@ -166,7 +184,7 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
                     JSONObject singleBill=billRes.getJSONObject(i);
 
-                    String billId=singleBill.getString("bill_id");
+                    String billId=singleBill.getString("bill_id").toUpperCase();
                     String billTitle=singleBill.getString("official_title");
                     String billDate=singleBill.getString("introduced_on");
                     Bill b=new Bill(billId,billTitle,billDate);

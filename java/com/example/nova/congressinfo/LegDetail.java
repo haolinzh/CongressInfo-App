@@ -3,8 +3,8 @@ package com.example.nova.congressinfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,6 +31,15 @@ public class LegDetail extends AppCompatActivity {
     TextView tvEmail;
     TextView tvChamber;
     TextView tvContact;
+    TextView tvSterm;
+    TextView tvEterm;
+    TextView tvOffice;
+    TextView tvState;
+    TextView tvFax;
+    TextView tvBirthday;
+    TextView tvParty;
+    ImageView imgParty;
+
 
 
     @Override
@@ -42,7 +51,7 @@ public class LegDetail extends AppCompatActivity {
 
         setTitle("Legislator Info");
         id = getIntent().getStringExtra("legId");
-        Log.d("txt",id);
+
 
         DetTask detTask=new DetTask();
         detTask.execute("http://104.198.0.197:8080/legislators?bioguide_id="+id+"&apikey=4acd972a599843bd93ea4dba171a483f");
@@ -90,24 +99,41 @@ public class LegDetail extends AppCompatActivity {
                 JSONObject legJson = new JSONObject(finalJson);
                 JSONArray legRes = legJson.getJSONArray("results");
 
-                int len = legRes.length();
 
                 JSONObject singleLeg = legRes.getJSONObject(0);
 
-//                String legParty = singleLeg.getString("party");
 
+
+                String legTitle = singleLeg.getString("title");
                 String legFirstName = singleLeg.getString("first_name");
                 String legLastName = singleLeg.getString("last_name");
 
-                String legName = legFirstName + ", " + legLastName;
+                String legName = legTitle+". "+legFirstName + ", " + legLastName;
                 String legEmail=singleLeg.getString("oc_email");
                 String legChamber=singleLeg.getString("chamber");
                 String legContact=singleLeg.getString("phone");
+                String legSTerm=singleLeg.getString("term_start");
+                String legETerm=singleLeg.getString("term_end");
+                String legOffice=singleLeg.getString("office");
+                String legState=singleLeg.getString("state");
+                String legFax=singleLeg.getString("fax");
+                String legBirthday=singleLeg.getString("birthday");
+
+
+                String legParty = singleLeg.getString("party");
+
 
                 legDetail.add(legName);
                 legDetail.add(legEmail);
                 legDetail.add(legChamber);
                 legDetail.add(legContact);
+                legDetail.add(legSTerm);
+                legDetail.add(legETerm);
+                legDetail.add(legOffice);
+                legDetail.add(legState);
+                legDetail.add(legFax);
+                legDetail.add(legBirthday);
+                legDetail.add(legParty);
 
                 return legDetail;
 
@@ -126,16 +152,46 @@ public class LegDetail extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute(List<String> strings) {
+        protected void onPostExecute(List<String> legs) {
+            super.onPostExecute(legs);
             tvName= (TextView) findViewById(R.id.detName);
             tvEmail= (TextView) findViewById(R.id.detEmail);
             tvChamber= (TextView) findViewById(R.id.detChamber);
             tvContact= (TextView) findViewById(R.id.detContact);
+            tvSterm= (TextView) findViewById(R.id.detSTerm);
+            tvEterm= (TextView) findViewById(R.id.detETerm);
+            tvOffice= (TextView) findViewById(R.id.detOffice);
+            tvState= (TextView) findViewById(R.id.detState);
+            tvFax= (TextView) findViewById(R.id.detFax);
+            tvBirthday  = (TextView) findViewById(R.id.detBirthday);
+            tvParty=(TextView)findViewById(R.id.detParty);
+            imgParty=(ImageView) findViewById(R.id.imageViewParty);
+
 
             tvName.setText(legDetail.get(0));
             tvEmail.setText(legDetail.get(1));
             tvChamber.setText(legDetail.get(2));
             tvContact.setText(legDetail.get(3));
+            tvSterm.setText(legDetail.get(4));
+            tvEterm.setText(legDetail.get(5));
+            tvOffice.setText(legDetail.get(6));
+            tvState.setText(legDetail.get(7));
+            tvFax.setText(legDetail.get(8));
+            tvBirthday.setText(legDetail.get(9));
+            String p=legDetail.get(10);
+
+            if (p.equals("R")){
+                tvParty.setText("Republican");
+                imgParty.setImageResource(R.drawable.r);
+
+            }else if(p.equals("D")){
+                tvParty.setText("Democratic");
+                imgParty.setImageResource(R.drawable.d);
+            }else {
+                tvParty.setText("Independence");
+
+            }
+
         }
     }
 }

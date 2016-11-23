@@ -7,17 +7,25 @@
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/billId" />
+        android:id="@+id/billId"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/billTitle" />
+        android:id="@+id/billTitle"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/billDate" />
+        android:id="@+id/billDate"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp" />
 </LinearLayout>
