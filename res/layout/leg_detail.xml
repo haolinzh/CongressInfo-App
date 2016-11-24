@@ -197,12 +197,13 @@
                 android:text="Term:"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/detTermBar"
+            <ProgressBar
+                android:id="@+id/TermBar"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="textEnd" />
+                android:max="100"
+                android:progress="60" />
 
         </TableRow>
 

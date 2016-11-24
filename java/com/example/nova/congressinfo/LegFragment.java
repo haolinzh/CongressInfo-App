@@ -74,6 +74,7 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         legByHouseView.setOnItemClickListener(onItemClickListener);
         legBySenateView.setOnItemClickListener(onItemClickListener);
 
+
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("BY STATES").setContent(R.id.legByState));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("HOUSE").setContent(R.id.legInHouse));
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("SENATE").setContent(R.id.legInSenate));

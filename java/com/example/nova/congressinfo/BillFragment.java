@@ -130,6 +130,9 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
                     String billId=singleBill.getString("bill_id").toUpperCase();
                     String billTitle=singleBill.getString("official_title");
                     String billDate=singleBill.getString("introduced_on");
+
+                    billDate=DateFormat.dateFormat(billDate);
+
                     Bill b=new Bill(billId,billTitle,billDate);
                     activeBillList.add(b);
 
@@ -187,6 +190,9 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
                     String billId=singleBill.getString("bill_id").toUpperCase();
                     String billTitle=singleBill.getString("official_title");
                     String billDate=singleBill.getString("introduced_on");
+
+                    billDate=DateFormat.dateFormat(billDate);
+
                     Bill b=new Bill(billId,billTitle,billDate);
                     newBillList.add(b);
 

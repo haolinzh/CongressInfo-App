@@ -3,8 +3,10 @@ package com.example.nova.congressinfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -17,7 +19,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +43,7 @@ public class LegDetail extends AppCompatActivity {
     TextView tvBirthday;
     TextView tvParty;
     ImageView imgParty;
+    ProgressBar termProgress;
 
 
 
@@ -74,6 +79,24 @@ public class LegDetail extends AppCompatActivity {
     }
 
 
+    private int calTermPercent(String start,String end){
+        Log.d("exec","exec");
+        Timestamp tStart;
+        Timestamp tEnd;
+        start=start+" 00:00:00";
+        end=end+" 00:00:00";
+        tStart=Timestamp.valueOf(start);
+        tEnd=Timestamp.valueOf(end);
+        long tStarttime=tStart.getTime();
+        long tEndtime=tEnd.getTime();
+        Date date=new Date();
+        long tNowtime=date.getTime();
+        int percent=(int)((tNowtime-tStarttime)*100/(tEndtime-tStarttime));
+
+        return percent;
+    }
+
+
     private class DetTask extends AsyncTask<Object, Void, List<String>> {
 
         protected List<String> doInBackground(Object... params) {
@@ -92,17 +115,11 @@ public class LegDetail extends AppCompatActivity {
                 while ((line = bis.readLine()) != null) {
                     response.append(line);
                 }
-
                 String finalJson = response.toString();
-
 
                 JSONObject legJson = new JSONObject(finalJson);
                 JSONArray legRes = legJson.getJSONArray("results");
-
-
                 JSONObject singleLeg = legRes.getJSONObject(0);
-
-
 
                 String legTitle = singleLeg.getString("title");
                 String legFirstName = singleLeg.getString("first_name");
@@ -118,8 +135,6 @@ public class LegDetail extends AppCompatActivity {
                 String legState=singleLeg.getString("state");
                 String legFax=singleLeg.getString("fax");
                 String legBirthday=singleLeg.getString("birthday");
-
-
                 String legParty = singleLeg.getString("party");
 
 
@@ -166,18 +181,20 @@ public class LegDetail extends AppCompatActivity {
             tvBirthday  = (TextView) findViewById(R.id.detBirthday);
             tvParty=(TextView)findViewById(R.id.detParty);
             imgParty=(ImageView) findViewById(R.id.imageViewParty);
+            termProgress= (ProgressBar) findViewById(R.id.TermBar);
 
+           int percent= calTermPercent(legDetail.get(4),legDetail.get(5));
 
             tvName.setText(legDetail.get(0));
             tvEmail.setText(legDetail.get(1));
             tvChamber.setText(legDetail.get(2));
             tvContact.setText(legDetail.get(3));
-            tvSterm.setText(legDetail.get(4));
-            tvEterm.setText(legDetail.get(5));
+            tvSterm.setText(DateFormat.dateFormat(legDetail.get(4)));
+            tvEterm.setText(DateFormat.dateFormat(legDetail.get(5)));
             tvOffice.setText(legDetail.get(6));
             tvState.setText(legDetail.get(7));
             tvFax.setText(legDetail.get(8));
-            tvBirthday.setText(legDetail.get(9));
+            tvBirthday.setText(DateFormat.dateFormat(legDetail.get(9)));
             String p=legDetail.get(10);
 
             if (p.equals("R")){
@@ -191,6 +208,9 @@ public class LegDetail extends AppCompatActivity {
                 tvParty.setText("Independence");
 
             }
+
+            termProgress.setProgress(percent);
+
 
         }
     }

@@ -3,7 +3,6 @@ package com.example.nova.congressinfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -108,6 +107,8 @@ public class BillDetail extends AppCompatActivity {
                 String billChamber = singleBill.getString("chamber");
                 String billStatus = String.valueOf(singleBill.getJSONObject("history").getBoolean("active"));
                 String billIntroduced = singleBill.getString("introduced_on");
+                billIntroduced=DateFormat.dateFormat(billIntroduced);
+
                 String billCongressUrl = singleBill.getJSONObject("urls").getString("congress");
                 String billVerStatus = "N.A";
                 String billUrl="N.A";
@@ -128,13 +129,11 @@ public class BillDetail extends AppCompatActivity {
                 billDetail.add(billVerStatus);
                 billDetail.add(billUrl);
 
-                Log.d("txt", billDetail.toString());
                 return billDetail;
 
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
-                Log.d("ERROR", "JSON");
                 e.printStackTrace();
 
             }
