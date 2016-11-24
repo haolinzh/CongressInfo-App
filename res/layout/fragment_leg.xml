@@ -10,7 +10,9 @@
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +33,7 @@
                     android:id="@+id/legByState"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <ListView
                         android:id="@+id/legByStateView"
@@ -43,26 +45,31 @@
                     android:id="@+id/legInHouse"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <ListView
                         android:id="@+id/legByHouseView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/legInSenate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <ListView
                         android:id="@+id/legBySenateView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
+
+
             </FrameLayout>
+
         </LinearLayout>
     </TabHost>
 </RelativeLayout>
