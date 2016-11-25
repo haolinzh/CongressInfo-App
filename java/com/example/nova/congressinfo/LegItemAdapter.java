@@ -44,7 +44,7 @@ public class LegItemAdapter extends ArrayAdapter {
 
 
         tvInfo1.setText(leg.getName());
-        tvInfo2.setText("("+leg.getParty()+")"+leg.getState()+"-District "+leg.getDistrict());
+        tvInfo2.setText("("+leg.getParty()+")"+leg.getState()+" - District "+leg.getDistrict());
         String picUrl="https://theunitedstates.io/images/congress/original/"+leg.getId()+".jpg";
         Picasso.with(getContext()).load(picUrl).resize(80,80).into(imgLeg);
 

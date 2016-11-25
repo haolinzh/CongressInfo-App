@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,21 +30,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LegFragment extends Fragment implements TabHost.OnTabChangeListener {
+public class LegFragment extends Fragment implements TabHost.OnTabChangeListener, View.OnClickListener {
     RelativeLayout layout;
     TabHost tabHost;
     ListView legByStateView;
     List<Leg> legList;
-
     ListView legByHouseView;
     List<Leg> legHouseList;
 
     ListView legBySenateView;
     List<Leg> legSenateList;
+
+    Map<String,Integer> legStateMap;
+    Map<String,Integer> legHouseMap;
+    Map<String,Integer> legSenateMap;
 
 
     public LegFragment() {
@@ -102,6 +109,8 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     public void onTabChanged(String s) {
 
     }
+
+
 
 
     public class LegTask extends AsyncTask<Object, Object, List<Leg>> {
@@ -165,6 +174,10 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
             Collections.sort(legList, cmpbyState);
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legList);
             legByStateView.setAdapter(legItemAdapter);
+
+            getLegStateIndex(legList);
+            LinearLayout sideLayout= (LinearLayout) getActivity().findViewById(R.id.legStateIndex);
+            sideBarDisplay(sideLayout);
 
         }
     }
@@ -319,5 +332,43 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
             return l1.getName().compareTo(l2.getName());
         }
     };
+
+
+    private void getLegStateIndex(List<Leg> list){
+        legStateMap=new TreeMap<>();
+        for(int i=0;i<list.size();i++){
+            Leg leg=list.get(i);
+            String index=leg.getState().substring(0,1);
+            if(!legStateMap.containsKey(index)){
+                legStateMap.put(index,i);
+            }
+        }
+
+    }
+
+    private void sideBarDisplay(LinearLayout layout){
+        TextView tv;
+        Map<String,Integer> tmp;
+        tmp=legStateMap;
+
+        List<String> sideIndex=new ArrayList<>(tmp.keySet());
+        for (String index:sideIndex){
+            tv=(TextView)getActivity().getLayoutInflater().inflate(R.layout.sidebar_index,null);
+            tv.setText(index);
+            tv.setOnClickListener(this);
+            layout.addView(tv);
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        TextView tmp= (TextView) view;
+        if (tabHost.getCurrentTab()==0){
+            legByStateView.setSelection(legStateMap.get(tmp.getText()));
+        }
+    }
+
+
 
 }
