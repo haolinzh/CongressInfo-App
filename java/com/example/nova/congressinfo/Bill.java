@@ -9,9 +9,6 @@ public class Bill {
     private String title;
     private String date;
 
-    Bill(){
-
-    }
 
     Bill(String id,String title,String date){
         this.id=id;

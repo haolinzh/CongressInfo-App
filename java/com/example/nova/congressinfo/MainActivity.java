@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-  //      LegFragment legFragment=new LegFragment();
-  //      FragmentManager manager=getSupportFragmentManager();
-  //      manager.beginTransaction().replace(R.id.content_main,legFragment,legFragment.getTag()).commit();
+        LegFragment legFragment=new LegFragment();
+        FragmentManager manager=getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.content_main,legFragment,legFragment.getTag()).commit();
 
     }
 
@@ -71,7 +71,12 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_com) {
-            Toast.makeText(this,"Committees",Toast.LENGTH_SHORT).show();
+            setTitle("Committees");
+            CommFragment commFragment=new CommFragment();
+            FragmentManager manager=getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.content_main,commFragment,commFragment.getTag()).commit();
+
+
 
         } else if (id == R.id.nav_fav) {
             Toast.makeText(this,"Favorites",Toast.LENGTH_SHORT).show();

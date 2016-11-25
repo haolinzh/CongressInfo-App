@@ -1,18 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.nova.congressinfo.LegFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,46 +23,41 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/legByState"
+                    android:id="@+id/tabHouseComm"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <ListView
-                        android:id="@+id/legByStateView"
-                        android:layout_width="333dp"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/legInHouse"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ListView
-                        android:id="@+id/legByHouseView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/legInSenate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ListView
-                        android:id="@+id/legBySenateView"
+                        android:id="@+id/listViewHouseComm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/tabSenateComm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <ListView
+                        android:id="@+id/listViewSenateComm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabJointComm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/listViewJointComm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
             </FrameLayout>
-
         </LinearLayout>
     </TabHost>
 </RelativeLayout>

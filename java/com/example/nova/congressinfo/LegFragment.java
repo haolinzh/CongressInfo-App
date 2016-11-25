@@ -1,6 +1,7 @@
 package com.example.nova.congressinfo;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,12 +25,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LegFragment extends Fragment implements TabHost.OnTabChangeListener{
+public class LegFragment extends Fragment implements TabHost.OnTabChangeListener {
     RelativeLayout layout;
     TabHost tabHost;
     ListView legByStateView;
@@ -42,19 +45,18 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     List<Leg> legSenateList;
 
 
-
     public LegFragment() {
-        legList=new ArrayList<>();
-        legHouseList=new ArrayList<>();
-        legSenateList=new ArrayList<>();
+        legList = new ArrayList<>();
+        legHouseList = new ArrayList<>();
+        legSenateList = new ArrayList<>();
 
-        LegTask legtask=new LegTask();
+        LegTask legtask = new LegTask();
         legtask.execute("http://104.198.0.197:8080/legislators?apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
 
-        LegHouseTask legHouseTask=new LegHouseTask();
+        LegHouseTask legHouseTask = new LegHouseTask();
         legHouseTask.execute("http://104.198.0.197:8080/legislators?chamber=house&apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
 
-        LegSenateTask legSenateTask=new LegSenateTask();
+        LegSenateTask legSenateTask = new LegSenateTask();
         legSenateTask.execute("http://104.198.0.197:8080/legislators?chamber=senate&apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
     }
 
@@ -66,9 +68,9 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost = (TabHost) layout.findViewById(android.R.id.tabhost);
         tabHost.setup();
 
-        legByStateView=(ListView) layout.findViewById(R.id.legByStateView);
-        legByHouseView=(ListView) layout.findViewById(R.id.legByHouseView);
-        legBySenateView=(ListView) layout.findViewById(R.id.legBySenateView);
+        legByStateView = (ListView) layout.findViewById(R.id.legByStateView);
+        legByHouseView = (ListView) layout.findViewById(R.id.legByHouseView);
+        legBySenateView = (ListView) layout.findViewById(R.id.legBySenateView);
 
         legByStateView.setOnItemClickListener(onItemClickListener);
         legByHouseView.setOnItemClickListener(onItemClickListener);
@@ -85,12 +87,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         return layout;
     }
 
-    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent=new Intent(getActivity().getApplicationContext(),LegDetail.class);
-             Leg leg =(Leg) adapterView.getAdapter().getItem(i);
-             intent.putExtra("legId",leg.getId());
+            Intent intent = new Intent(getActivity().getApplicationContext(), LegDetail.class);
+            Leg leg = (Leg) adapterView.getAdapter().getItem(i);
+            intent.putExtra("legId", leg.getId());
             startActivity(intent);
 
         }
@@ -102,12 +104,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     }
 
 
-    public class LegTask extends AsyncTask<Object,Object,List<Leg>>{
+    public class LegTask extends AsyncTask<Object, Object, List<Leg>> {
 
         @Override
         protected List<Leg> doInBackground(Object... params) {
 
-            Object url=params[0];
+            Object url = params[0];
             URLConnection connection;
             InputStream is;
             try {
@@ -132,23 +134,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
                     String legFirstName = singleLeg.getString("first_name");
                     String legLastName = singleLeg.getString("last_name");
-                    String legName=legFirstName+", "+legLastName;
+                    String legName = legLastName + ", " + legFirstName;
 
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
-                    String legDistrict=singleLeg.getString("district");
-                    String id=singleLeg.getString("bioguide_id");
+                    String legDistrict = singleLeg.getString("district");
+                    String id = singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
+                    Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legList.add(l);
 
                 }
                 return legList;
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -158,19 +159,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            LegItemAdapter legItemAdapter=new LegItemAdapter(getActivity().getApplicationContext(),legList);
+            Activity myActivity=getActivity();
+            if (myActivity==null) return;
+
+            Collections.sort(legList, cmpbyState);
+            LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legList);
             legByStateView.setAdapter(legItemAdapter);
 
         }
     }
 
-
-    public class LegHouseTask extends AsyncTask<Object,Object,List<Leg>>{
+    public class LegHouseTask extends AsyncTask<Object, Object, List<Leg>> {
 
         @Override
         protected List<Leg> doInBackground(Object... params) {
 
-            Object url=params[0];
+            Object url = params[0];
             URLConnection connection;
             InputStream is;
             try {
@@ -195,23 +199,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
                     String legFirstName = singleLeg.getString("first_name");
                     String legLastName = singleLeg.getString("last_name");
-                    String legName=legFirstName+", "+legLastName;
+                    String legName = legLastName + ", " + legFirstName;
 
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
-                    String legDistrict=singleLeg.getString("district");
-                    String id=singleLeg.getString("bioguide_id");
+                    String legDistrict = singleLeg.getString("district");
+                    String id = singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
+                    Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legHouseList.add(l);
 
                 }
                 return legHouseList;
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -221,18 +224,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            LegItemAdapter legItemAdapter=new LegItemAdapter(getActivity().getApplicationContext(),legHouseList);
+            Activity myActivity=getActivity();
+            if (myActivity==null) return;
+
+            Collections.sort(legHouseList,cmpbyName);
+            LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legHouseList);
             legByHouseView.setAdapter(legItemAdapter);
 
         }
     }
 
-    public class LegSenateTask extends AsyncTask<Object,Object,List<Leg>>{
+    public class LegSenateTask extends AsyncTask<Object, Object, List<Leg>> {
 
         @Override
         protected List<Leg> doInBackground(Object... params) {
 
-            Object url=params[0];
+            Object url = params[0];
             URLConnection connection;
             InputStream is;
             try {
@@ -257,23 +264,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
                     String legFirstName = singleLeg.getString("first_name");
                     String legLastName = singleLeg.getString("last_name");
-                    String legName=legFirstName+", "+legLastName;
+                    String legName = legLastName + ", " + legFirstName;
 
                     String legParty = singleLeg.getString("party");
                     String legState = singleLeg.getString("state_name");
-                    String legDistrict=singleLeg.getString("district");
-                    String id=singleLeg.getString("bioguide_id");
+                    String legDistrict = singleLeg.getString("district");
+                    String id = singleLeg.getString("bioguide_id");
 
-                    Leg l = new Leg(legName, legParty, legState,legDistrict,id);
+                    Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legSenateList.add(l);
 
                 }
                 return legSenateList;
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
 
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -283,10 +289,35 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            LegItemAdapter legItemAdapter=new LegItemAdapter(getActivity().getApplicationContext(),legSenateList);
+            Activity myActivity=getActivity();
+            if (myActivity==null) return;
+
+            Collections.sort(legSenateList,cmpbyName);
+            LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legSenateList);
             legBySenateView.setAdapter(legItemAdapter);
 
         }
     }
+
+
+    Comparator<Leg> cmpbyState = new Comparator<Leg>() {
+        @Override
+        public int compare(Leg l1, Leg l2) {
+
+            if (l1.getState().compareTo(l2.getState()) != 0) {
+                return l1.getState().compareTo(l2.getState());
+            } else {
+                return l1.getName().compareTo(l2.getName());
+            }
+
+        }
+    };
+
+    Comparator<Leg> cmpbyName = new Comparator<Leg>() {
+        @Override
+        public int compare(Leg l1, Leg l2) {
+            return l1.getName().compareTo(l2.getName());
+        }
+    };
 
 }

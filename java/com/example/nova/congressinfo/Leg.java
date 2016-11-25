@@ -5,26 +5,23 @@ package com.example.nova.congressinfo;
  */
 
 public class Leg {
-//    private String picUrl;
+
     private String name;
     private String party;
     private String state;
     private String district;
     private String id;
 
-    Leg(String name,String party,String state,String district,String id){
-//        this.picUrl=picUrl;
-        this.name=name;
-        this.party=party;
-        this.state=state;
-        this.district=district;
-        this.id=id;
+    Leg(String name, String party, String state, String district, String id) {
+
+        this.name = name;
+        this.party = party;
+        this.state = state;
+        this.district = district;
+        this.id = id;
 
     }
 
-//    public String getPicUrl() {
-//        return picUrl;
-//    }
 
     public String getName() {
         return name;
@@ -42,7 +39,7 @@ public class Leg {
         return district;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 

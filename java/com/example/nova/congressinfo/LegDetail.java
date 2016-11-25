@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +47,8 @@ public class LegDetail extends AppCompatActivity {
     ImageView imgParty;
     ProgressBar termProgress;
 
+    ImageView imgDet;
+
 
 
     @Override
@@ -57,6 +61,7 @@ public class LegDetail extends AppCompatActivity {
         setTitle("Legislator Info");
         id = getIntent().getStringExtra("legId");
 
+        Log.d("id",id);
 
         DetTask detTask=new DetTask();
         detTask.execute("http://104.198.0.197:8080/legislators?bioguide_id="+id+"&apikey=4acd972a599843bd93ea4dba171a483f");
@@ -80,7 +85,6 @@ public class LegDetail extends AppCompatActivity {
 
 
     private int calTermPercent(String start,String end){
-        Log.d("exec","exec");
         Timestamp tStart;
         Timestamp tEnd;
         start=start+" 00:00:00";
@@ -182,6 +186,7 @@ public class LegDetail extends AppCompatActivity {
             tvParty=(TextView)findViewById(R.id.detParty);
             imgParty=(ImageView) findViewById(R.id.imageViewParty);
             termProgress= (ProgressBar) findViewById(R.id.TermBar);
+            imgDet= (ImageView) findViewById(R.id.ivDetLeg);
 
            int percent= calTermPercent(legDetail.get(4),legDetail.get(5));
 
@@ -209,6 +214,8 @@ public class LegDetail extends AppCompatActivity {
 
             }
 
+            String picUrl="https://theunitedstates.io/images/congress/original/"+id+".jpg";
+            Picasso.with(getApplicationContext()).load(picUrl).resize(150,150).into(imgDet);
             termProgress.setProgress(percent);
 
 

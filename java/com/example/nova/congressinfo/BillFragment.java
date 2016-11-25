@@ -22,7 +22,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -150,6 +155,7 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
         @Override
         protected void onPostExecute(List<Bill> bills) {
+            Collections.sort(activeBillList,cmp);
             BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), activeBillList);
             activeBillView.setAdapter(adapter);
 
@@ -210,11 +216,29 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
         @Override
         protected void onPostExecute(List<Bill> bills) {
+            Collections.sort(newBillList,cmp);
             BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), newBillList);
             newBillView.setAdapter(adapter);
 
         }
     }
+
+
+    Comparator<Bill> cmp=new Comparator<Bill>() {
+        @Override
+        public int compare(Bill b1, Bill b2) {
+            SimpleDateFormat sdf=new SimpleDateFormat("MMM dd,yyyy");
+            try {
+                Date d1=sdf.parse(b1.getBillDate());
+                Date d2=sdf.parse(b2.getBillDate());
+                return  d2.compareTo(d1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
+
+        }
+    };
 
 
 }

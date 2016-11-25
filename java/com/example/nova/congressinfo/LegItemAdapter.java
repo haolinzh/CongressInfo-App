@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,14 +38,15 @@ public class LegItemAdapter extends ArrayAdapter {
 
         TextView tvInfo1=(TextView) convertView.findViewById(R.id.legInfo1);
         TextView tvInfo2=(TextView) convertView.findViewById(R.id.legInfo2);
+        ImageView imgLeg= (ImageView) convertView.findViewById(R.id.legImage);
 
         Leg leg=legItem.get(position);
 
+
         tvInfo1.setText(leg.getName());
-
-
         tvInfo2.setText("("+leg.getParty()+")"+leg.getState()+"-District "+leg.getDistrict());
-
+        String picUrl="https://theunitedstates.io/images/congress/original/"+leg.getId()+".jpg";
+        Picasso.with(getContext()).load(picUrl).resize(80,80).into(imgLeg);
 
         return convertView;
     }
