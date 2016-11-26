@@ -1,13 +1,18 @@
 package com.example.nova.congressinfo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -47,6 +52,10 @@ public class LegDetail extends AppCompatActivity {
     ImageView imgParty;
     ProgressBar termProgress;
     ImageView imgDet;
+    ImageButton imgBlegFav;
+    ImageButton imgBlegFB;
+    ImageButton imgBlegTW;
+    ImageButton imgBlegWeb;
 
 
 
@@ -140,6 +149,22 @@ public class LegDetail extends AppCompatActivity {
                 String legBirthday=singleLeg.getString("birthday");
                 String legParty = singleLeg.getString("party");
 
+                String legFbId="N.A";
+                String legTwId="N.A";
+                String legWebSite="N.A";
+
+                if (singleLeg.has("facebook_id")){
+                    legFbId=singleLeg.getString("facebook_id");
+                }
+                if (singleLeg.has("twitter_id")){
+                    legTwId=singleLeg.getString("twitter_id");
+                }
+                if (singleLeg.has("twitter_id")){
+                    legWebSite=singleLeg.getString("website");
+                }
+
+
+
 
                 legDetail.add(legName);
                 legDetail.add(legEmail);
@@ -152,6 +177,9 @@ public class LegDetail extends AppCompatActivity {
                 legDetail.add(legFax);
                 legDetail.add(legBirthday);
                 legDetail.add(legParty);
+                legDetail.add(legFbId);
+                legDetail.add(legTwId);
+                legDetail.add(legWebSite);
 
                 return legDetail;
 
@@ -186,6 +214,10 @@ public class LegDetail extends AppCompatActivity {
             imgParty=(ImageView) findViewById(R.id.imageViewParty);
             termProgress= (ProgressBar) findViewById(R.id.TermBar);
             imgDet= (ImageView) findViewById(R.id.ivDetLeg);
+            imgBlegFav= (ImageButton) findViewById(R.id.legDetImgBFav);
+            imgBlegFB= (ImageButton) findViewById(R.id.legDetImgBFB);
+            imgBlegTW= (ImageButton) findViewById(R.id.legDetImgBTW);
+            imgBlegWeb= (ImageButton) findViewById(R.id.legDetImgBWeb);
 
            int percent= calTermPercent(legDetail.get(4),legDetail.get(5));
 
@@ -216,6 +248,57 @@ public class LegDetail extends AppCompatActivity {
             String picUrl="https://theunitedstates.io/images/congress/original/"+id+".jpg";
             Picasso.with(getApplicationContext()).load(picUrl).resize(150,150).into(imgDet);
             termProgress.setProgress(percent);
+
+
+            final String FBid=legDetail.get(11);
+            final String TWid=legDetail.get(12);
+            final String WebSite=legDetail.get(13);
+
+            imgBlegFB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!FBid.equals("N.A")){
+                        String url="https://www.facebook.com/"+FBid;
+                        Uri uri = Uri.parse(url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(),"No Facebook",Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            });
+
+            imgBlegTW.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!TWid.equals("N.A")){
+                        String url="https://www.twitter.com/"+TWid;
+                        Uri uri = Uri.parse(url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(),"No Twitter",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            imgBlegWeb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!WebSite.equals("N.A")){
+                        String url=WebSite;
+                        Uri uri = Uri.parse(url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(),"No WebSite",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
 
         }

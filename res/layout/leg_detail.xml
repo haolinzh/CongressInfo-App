@@ -17,24 +17,27 @@
             <ImageButton
                 android:layout_width="54dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/forward"
-                android:id="@+id/legDetImButton1" />
+                app:srcCompat="@drawable/fav"
+                android:id="@+id/legDetImgBFav" />
             <ImageButton
                 android:layout_width="54dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/forward"
-                android:id="@+id/legDetImButton2" />
+                android:src="@drawable/f"
+                android:id="@+id/legDetImgBFB"
+                android:scaleType="fitXY"/>
             <ImageButton
                 android:layout_width="54dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/forward"
-                android:id="@+id/legDetImButton3" />
+                android:src="@drawable/t"
+                android:id="@+id/legDetImgBTW"
+                android:scaleType="fitXY"/>
 
             <ImageButton
                 android:layout_width="54dp"
                 android:layout_height="45dp"
-                app:srcCompat="@drawable/forward"
-                android:id="@+id/legDetImButton4" />
+                android:src="@drawable/w"
+                android:id="@+id/legDetImgBWeb"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <ImageView
