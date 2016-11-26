@@ -9,22 +9,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="right">
 
             <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="42dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="136dp"
-                app:srcCompat="@drawable/fav" />
-        </FrameLayout>
+                android:layout_width="54dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/forward"
+                android:id="@+id/legDetImButton1" />
+            <ImageButton
+                android:layout_width="54dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/forward"
+                android:id="@+id/legDetImButton2" />
+            <ImageButton
+                android:layout_width="54dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/forward"
+                android:id="@+id/legDetImButton3" />
+
+            <ImageButton
+                android:layout_width="54dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/forward"
+                android:id="@+id/legDetImButton4" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivDetLeg"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="60dp"
             app:srcCompat="@mipmap/ic_launcher"
             android:layout_width="120dp"
             android:layout_height="120dp" />

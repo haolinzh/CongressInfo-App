@@ -1,5 +1,6 @@
 package com.example.nova.congressinfo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,18 +103,18 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
     }
 
 
-    private class ActiveTask extends AsyncTask<Object, Object, List<Bill>> {
+    private class ActiveTask extends AsyncTask<String, Void, List<Bill>> {
 
 
         @Override
-        protected List<Bill> doInBackground(Object... params) {
+        protected List<Bill> doInBackground(String... params) {
 
-            Object url=params[0];
+            String url=params[0];
             URLConnection connection;
             InputStream is;
 
             try {
-                connection=new URL((String) url).openConnection();
+                connection=new URL(url).openConnection();
                 is=connection.getInputStream();
                 BufferedReader bis=new BufferedReader(new InputStreamReader(is));
 
@@ -155,8 +156,11 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
         @Override
         protected void onPostExecute(List<Bill> bills) {
+            Activity myActivity=getActivity();
+            if (myActivity==null) return;
+
             Collections.sort(activeBillList,cmp);
-            BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), activeBillList);
+            BillItemAdapter adapter = new BillItemAdapter(myActivity.getApplicationContext(), activeBillList);
             activeBillView.setAdapter(adapter);
 
         }
@@ -164,17 +168,17 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
 
 
-    private class NewTask extends AsyncTask<Object, Object, List<Bill>> {
+    private class NewTask extends AsyncTask<String, Void, List<Bill>> {
 
         @Override
-        protected List<Bill> doInBackground(Object... params) {
+        protected List<Bill> doInBackground(String... params) {
 
-            Object url=params[0];
+            String url=params[0];
             URLConnection connection;
             InputStream is;
 
             try {
-                connection=new URL((String) url).openConnection();
+                connection=new URL(url).openConnection();
                 is=connection.getInputStream();
                 BufferedReader bis=new BufferedReader(new InputStreamReader(is));
 
@@ -216,8 +220,12 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
         @Override
         protected void onPostExecute(List<Bill> bills) {
+            Activity myActivity=getActivity();
+            if (myActivity==null) return;
+
+
             Collections.sort(newBillList,cmp);
-            BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), newBillList);
+            BillItemAdapter adapter = new BillItemAdapter(myActivity.getApplicationContext(), newBillList);
             newBillView.setAdapter(adapter);
 
         }

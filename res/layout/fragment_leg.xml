@@ -45,12 +45,13 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
                             android:background="#c3c3c3"
-                            android:id="@+id/legStateIndex"></LinearLayout>
+                            android:id="@+id/legStateIndex"/>
 
                         <ListView
                             android:id="@+id/legByStateView"
-                            android:layout_width="333dp"
-                            android:layout_height="match_parent" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="none"/>
                     </FrameLayout>
 
                 </LinearLayout>
@@ -61,10 +62,24 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <ListView
-                        android:id="@+id/legByHouseView"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="#c3c3c3"
+                            android:id="@+id/legHouseIndex"/>
+
+                        <ListView
+                            android:id="@+id/legByHouseView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="none"/>
+                    </FrameLayout>
 
 
                 </LinearLayout>
@@ -75,10 +90,25 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <ListView
-                        android:id="@+id/legBySenateView"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="#c3c3c3"
+                            android:id="@+id/legSenateIndex"/>
+
+                        <ListView
+                            android:id="@+id/legBySenateView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scrollbars="none"/>
+                    </FrameLayout>
+
                 </LinearLayout>
 
 

@@ -46,7 +46,6 @@ public class LegDetail extends AppCompatActivity {
     TextView tvParty;
     ImageView imgParty;
     ProgressBar termProgress;
-
     ImageView imgDet;
 
 

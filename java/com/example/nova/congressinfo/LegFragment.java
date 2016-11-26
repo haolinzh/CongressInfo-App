@@ -88,6 +88,7 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("HOUSE").setContent(R.id.legInHouse));
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("SENATE").setContent(R.id.legInSenate));
 
+
         tabHost.setCurrentTab(0);
         tabHost.setOnTabChangedListener(this);
 
@@ -111,18 +112,16 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     }
 
 
-
-
-    public class LegTask extends AsyncTask<Object, Object, List<Leg>> {
+    public class LegTask extends AsyncTask<String, Void, List<Leg>> {
 
         @Override
-        protected List<Leg> doInBackground(Object... params) {
+        protected List<Leg> doInBackground(String... params) {
 
-            Object url = params[0];
+            String url = params[0];
             URLConnection connection;
             InputStream is;
             try {
-                connection = new URL((String) url).openConnection();
+                connection = new URL(url).openConnection();
                 is = connection.getInputStream();
                 BufferedReader bis = new BufferedReader(new InputStreamReader(is));
 
@@ -149,6 +148,11 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legState = singleLeg.getString("state_name");
                     String legDistrict = singleLeg.getString("district");
                     String id = singleLeg.getString("bioguide_id");
+
+                    if (legDistrict.equals("null"))
+                    {
+                        legDistrict="0";
+                    }
 
                     Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legList.add(l);
@@ -176,22 +180,22 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
             legByStateView.setAdapter(legItemAdapter);
 
             getLegStateIndex(legList);
-            LinearLayout sideLayout= (LinearLayout) getActivity().findViewById(R.id.legStateIndex);
+            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legStateIndex);
             sideBarDisplay(sideLayout);
 
         }
     }
 
-    public class LegHouseTask extends AsyncTask<Object, Object, List<Leg>> {
+    public class LegHouseTask extends AsyncTask<String, Void, List<Leg>> {
 
         @Override
-        protected List<Leg> doInBackground(Object... params) {
+        protected List<Leg> doInBackground(String... params) {
 
-            Object url = params[0];
+            String url = params[0];
             URLConnection connection;
             InputStream is;
             try {
-                connection = new URL((String) url).openConnection();
+                connection = new URL(url).openConnection();
                 is = connection.getInputStream();
                 BufferedReader bis = new BufferedReader(new InputStreamReader(is));
 
@@ -218,6 +222,7 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legState = singleLeg.getString("state_name");
                     String legDistrict = singleLeg.getString("district");
                     String id = singleLeg.getString("bioguide_id");
+
 
                     Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legHouseList.add(l);
@@ -244,19 +249,23 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legHouseList);
             legByHouseView.setAdapter(legItemAdapter);
 
+            getLegHouseIndex(legHouseList);
+            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legHouseIndex);
+            sideBarDisplay(sideLayout);
+
         }
     }
 
-    public class LegSenateTask extends AsyncTask<Object, Object, List<Leg>> {
+    public class LegSenateTask extends AsyncTask<String, Void, List<Leg>> {
 
         @Override
-        protected List<Leg> doInBackground(Object... params) {
+        protected List<Leg> doInBackground(String... params) {
 
-            Object url = params[0];
+            String url = params[0];
             URLConnection connection;
             InputStream is;
             try {
-                connection = new URL((String) url).openConnection();
+                connection = new URL(url).openConnection();
                 is = connection.getInputStream();
                 BufferedReader bis = new BufferedReader(new InputStreamReader(is));
 
@@ -284,6 +293,11 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legDistrict = singleLeg.getString("district");
                     String id = singleLeg.getString("bioguide_id");
 
+                    if (legDistrict.equals("null"))
+                    {
+                        legDistrict="0";
+                    }
+
                     Leg l = new Leg(legName, legParty, legState, legDistrict, id);
                     legSenateList.add(l);
 
@@ -308,6 +322,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
             Collections.sort(legSenateList,cmpbyName);
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legSenateList);
             legBySenateView.setAdapter(legItemAdapter);
+
+
+            getLegSenateIndex(legSenateList);
+            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legSenateIndex);
+            sideBarDisplay(sideLayout);
+
 
         }
     }
@@ -346,10 +366,44 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
     }
 
+    private void getLegHouseIndex(List<Leg> list){
+        legHouseMap=new TreeMap<>();
+        for(int i=0;i<list.size();i++){
+            Leg leg=list.get(i);
+            String index=leg.getName().substring(0,1);
+            if(!legHouseMap.containsKey(index)){
+                legHouseMap.put(index,i);
+            }
+        }
+
+    }
+
+    private void getLegSenateIndex(List<Leg> list){
+        legSenateMap=new TreeMap<>();
+        for(int i=0;i<list.size();i++){
+            Leg leg=list.get(i);
+            String index=leg.getName().substring(0,1);
+            if(!legSenateMap.containsKey(index)){
+                legSenateMap.put(index,i);
+            }
+        }
+
+    }
+
+
+
+
     private void sideBarDisplay(LinearLayout layout){
         TextView tv;
         Map<String,Integer> tmp;
-        tmp=legStateMap;
+
+        if (layout.getId()==R.id.legStateIndex){
+            tmp=legStateMap;
+        }else if(layout.getId()==R.id.legHouseIndex){
+            tmp=legHouseMap;
+        }else {
+            tmp=legSenateMap;
+        }
 
         List<String> sideIndex=new ArrayList<>(tmp.keySet());
         for (String index:sideIndex){
@@ -363,9 +417,13 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
     @Override
     public void onClick(View view) {
-        TextView tmp= (TextView) view;
+        TextView tmpTv= (TextView) view;
         if (tabHost.getCurrentTab()==0){
-            legByStateView.setSelection(legStateMap.get(tmp.getText()));
+            legByStateView.setSelection(legStateMap.get(tmpTv.getText()));
+        }else if(tabHost.getCurrentTab()==1){
+            legByHouseView.setSelection(legHouseMap.get(tmpTv.getText()));
+        }else {
+            legBySenateView.setSelection(legSenateMap.get(tmpTv.getText()));
         }
     }
 
