@@ -1,7 +1,6 @@
 package com.example.nova.congressinfo;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ public class LegItemAdapter extends ArrayAdapter {
     }
 
 
-    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -46,8 +44,41 @@ public class LegItemAdapter extends ArrayAdapter {
         tvInfo1.setText(leg.getName());
         tvInfo2.setText("("+leg.getParty()+")"+leg.getState()+" - District "+leg.getDistrict());
         String picUrl="https://theunitedstates.io/images/congress/original/"+leg.getId()+".jpg";
-        Picasso.with(getContext()).load(picUrl).resize(40,40).into(imgLeg);
+        Picasso.with(getContext()).load(picUrl).resize(67,83).into(imgLeg);
 
         return convertView;
     }
+
+
+//    public View getView(int position, View convertView, ViewGroup parent){
+//        ViewHolder holder;
+//        if (convertView == null) {
+//            convertView = legInflator.inflate(R.layout.leglist_layout, parent, false);
+//            holder = new ViewHolder();
+//            holder.info1 = (TextView) convertView.findViewById(R.id.legInfo1);
+//            holder.info2 = (TextView) convertView.findViewById(R.id.legInfo1);
+//            holder.imgv=(ImageView) convertView.findViewById(R.id.legImage);
+//
+//            convertView.setTag(holder);
+//        }
+//        else {
+//            holder = (ViewHolder) convertView.getTag();
+//        }
+//
+//        Leg leg=legItem.get(position);
+//
+//        holder.info1.setText(leg.getName());
+//        holder.info2.setText("("+leg.getParty()+")"+leg.getState()+" - District "+leg.getDistrict());
+//        String picUrl="https://theunitedstates.io/images/congress/original/"+leg.getId()+".jpg";
+//        Picasso.with(getContext()).load(picUrl).resize(40,40).into(holder.imgv);
+//        return convertView;
+//
+//    }
+//
+//
+//    class ViewHolder {
+//        public TextView info1;
+//        public TextView info2;
+//        public ImageView imgv;
+//    }
 }

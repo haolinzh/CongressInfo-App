@@ -159,7 +159,7 @@ public class LegDetail extends AppCompatActivity {
                 if (singleLeg.has("twitter_id")){
                     legTwId=singleLeg.getString("twitter_id");
                 }
-                if (singleLeg.has("twitter_id")){
+                if (singleLeg.has("website")){
                     legWebSite=singleLeg.getString("website");
                 }
 
@@ -235,18 +235,22 @@ public class LegDetail extends AppCompatActivity {
 
             if (p.equals("R")){
                 tvParty.setText("Republican");
-                imgParty.setImageResource(R.drawable.r);
+                Picasso.with(getApplicationContext()).load(R.drawable.r).resize(30,30).into(imgParty);
+        //        imgParty.setImageResource(R.drawable.r);
 
             }else if(p.equals("D")){
                 tvParty.setText("Democratic");
-                imgParty.setImageResource(R.drawable.d);
+                Picasso.with(getApplicationContext()).load(R.drawable.d).resize(30,30).into(imgParty);
+        //        imgParty.setImageResource(R.drawable.d);
             }else {
                 tvParty.setText("Independence");
+                Picasso.with(getApplicationContext()).load(R.drawable.i).resize(30,30).into(imgParty);
+
 
             }
 
-            String picUrl="https://theunitedstates.io/images/congress/original/"+id+".jpg";
-            Picasso.with(getApplicationContext()).load(picUrl).resize(150,150).into(imgDet);
+            String picUrl="http://theunitedstates.io/images/congress/original/"+id+".jpg";
+            Picasso.with(getApplicationContext()).load(picUrl).resize(67,83).into(imgDet);
             termProgress.setProgress(percent);
 
 
