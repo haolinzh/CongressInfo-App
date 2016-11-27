@@ -62,7 +62,7 @@
             android:layout_below="@+id/ivDetLeg"
             android:layout_alignStart="@+id/ivDetLeg"
             android:layout_marginStart="50dp"
-            android:text="legParty" />
+             />
 
         <TableLayout
             android:layout_width="match_parent"

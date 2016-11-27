@@ -111,12 +111,13 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
             String url=params[0];
             URLConnection connection;
-            InputStream is;
+            InputStream is=null;
+            BufferedReader bis=null;
 
             try {
                 connection=new URL(url).openConnection();
                 is=connection.getInputStream();
-                BufferedReader bis=new BufferedReader(new InputStreamReader(is));
+                bis=new BufferedReader(new InputStreamReader(is));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -150,6 +151,14 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            }finally {
+                try {
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
             return null;
         }
@@ -175,12 +184,13 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
 
             String url=params[0];
             URLConnection connection;
-            InputStream is;
+            InputStream is=null;
+            BufferedReader bis=null;
 
             try {
                 connection=new URL(url).openConnection();
                 is=connection.getInputStream();
-                BufferedReader bis=new BufferedReader(new InputStreamReader(is));
+                bis=new BufferedReader(new InputStreamReader(is));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -214,6 +224,14 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            }finally {
+                try {
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
             return null;
         }

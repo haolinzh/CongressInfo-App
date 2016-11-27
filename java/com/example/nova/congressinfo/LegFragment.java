@@ -47,9 +47,9 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     ListView legBySenateView;
     List<Leg> legSenateList;
 
-    Map<String,Integer> legStateMap;
-    Map<String,Integer> legHouseMap;
-    Map<String,Integer> legSenateMap;
+    Map<String, Integer> legStateMap;
+    Map<String, Integer> legHouseMap;
+    Map<String, Integer> legSenateMap;
 
 
     public LegFragment() {
@@ -119,11 +119,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             String url = params[0];
             URLConnection connection;
-            InputStream is;
+            InputStream is=null;
+            BufferedReader bis=null;
             try {
                 connection = new URL(url).openConnection();
                 is = connection.getInputStream();
-                BufferedReader bis = new BufferedReader(new InputStreamReader(is));
+                bis = new BufferedReader(new InputStreamReader(is));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -149,9 +150,8 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legDistrict = singleLeg.getString("district");
                     String id = singleLeg.getString("bioguide_id");
 
-                    if (legDistrict.equals("null"))
-                    {
-                        legDistrict="0";
+                    if (legDistrict.equals("null")) {
+                        legDistrict = "0";
                     }
 
                     Leg l = new Leg(legName, legParty, legState, legDistrict, id);
@@ -164,6 +164,14 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            }finally {
+                try {
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             return null;
@@ -172,15 +180,15 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            Activity myActivity=getActivity();
-            if (myActivity==null) return;
+            Activity myActivity = getActivity();
+            if (myActivity == null) return;
 
             Collections.sort(legList, cmpbyState);
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legList);
             legByStateView.setAdapter(legItemAdapter);
 
             getLegStateIndex(legList);
-            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legStateIndex);
+            LinearLayout sideLayout = (LinearLayout) myActivity.findViewById(R.id.legStateIndex);
             sideBarDisplay(sideLayout);
 
         }
@@ -193,11 +201,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             String url = params[0];
             URLConnection connection;
-            InputStream is;
+            InputStream is = null;
+            BufferedReader bis = null;
             try {
                 connection = new URL(url).openConnection();
                 is = connection.getInputStream();
-                BufferedReader bis = new BufferedReader(new InputStreamReader(is));
+                bis = new BufferedReader(new InputStreamReader(is));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -234,6 +243,13 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return null;
@@ -242,15 +258,15 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            Activity myActivity=getActivity();
-            if (myActivity==null) return;
+            Activity myActivity = getActivity();
+            if (myActivity == null) return;
 
-            Collections.sort(legHouseList,cmpbyName);
+            Collections.sort(legHouseList, cmpbyName);
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legHouseList);
             legByHouseView.setAdapter(legItemAdapter);
 
             getLegHouseIndex(legHouseList);
-            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legHouseIndex);
+            LinearLayout sideLayout = (LinearLayout) myActivity.findViewById(R.id.legHouseIndex);
             sideBarDisplay(sideLayout);
 
         }
@@ -263,11 +279,12 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             String url = params[0];
             URLConnection connection;
-            InputStream is;
+            InputStream is=null;
+            BufferedReader bis=null;
             try {
                 connection = new URL(url).openConnection();
                 is = connection.getInputStream();
-                BufferedReader bis = new BufferedReader(new InputStreamReader(is));
+                bis = new BufferedReader(new InputStreamReader(is));
 
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -293,9 +310,8 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
                     String legDistrict = singleLeg.getString("district");
                     String id = singleLeg.getString("bioguide_id");
 
-                    if (legDistrict.equals("null"))
-                    {
-                        legDistrict="0";
+                    if (legDistrict.equals("null")) {
+                        legDistrict = "0";
                     }
 
                     Leg l = new Leg(legName, legParty, legState, legDistrict, id);
@@ -308,6 +324,14 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            }finally {
+                try {
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             return null;
@@ -316,16 +340,16 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
         @Override
         protected void onPostExecute(List<Leg> legs) {
-            Activity myActivity=getActivity();
-            if (myActivity==null) return;
+            Activity myActivity = getActivity();
+            if (myActivity == null) return;
 
-            Collections.sort(legSenateList,cmpbyName);
+            Collections.sort(legSenateList, cmpbyName);
             LegItemAdapter legItemAdapter = new LegItemAdapter(myActivity.getApplicationContext(), legSenateList);
             legBySenateView.setAdapter(legItemAdapter);
 
 
             getLegSenateIndex(legSenateList);
-            LinearLayout sideLayout= (LinearLayout) myActivity.findViewById(R.id.legSenateIndex);
+            LinearLayout sideLayout = (LinearLayout) myActivity.findViewById(R.id.legSenateIndex);
             sideBarDisplay(sideLayout);
 
 
@@ -354,60 +378,58 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
     };
 
 
-    private void getLegStateIndex(List<Leg> list){
-        legStateMap=new TreeMap<>();
-        for(int i=0;i<list.size();i++){
-            Leg leg=list.get(i);
-            String index=leg.getState().substring(0,1);
-            if(!legStateMap.containsKey(index)){
-                legStateMap.put(index,i);
+    private void getLegStateIndex(List<Leg> list) {
+        legStateMap = new TreeMap<>();
+        for (int i = 0; i < list.size(); i++) {
+            Leg leg = list.get(i);
+            String index = leg.getState().substring(0, 1);
+            if (!legStateMap.containsKey(index)) {
+                legStateMap.put(index, i);
             }
         }
 
     }
 
-    private void getLegHouseIndex(List<Leg> list){
-        legHouseMap=new TreeMap<>();
-        for(int i=0;i<list.size();i++){
-            Leg leg=list.get(i);
-            String index=leg.getName().substring(0,1);
-            if(!legHouseMap.containsKey(index)){
-                legHouseMap.put(index,i);
+    private void getLegHouseIndex(List<Leg> list) {
+        legHouseMap = new TreeMap<>();
+        for (int i = 0; i < list.size(); i++) {
+            Leg leg = list.get(i);
+            String index = leg.getName().substring(0, 1);
+            if (!legHouseMap.containsKey(index)) {
+                legHouseMap.put(index, i);
             }
         }
 
     }
 
-    private void getLegSenateIndex(List<Leg> list){
-        legSenateMap=new TreeMap<>();
-        for(int i=0;i<list.size();i++){
-            Leg leg=list.get(i);
-            String index=leg.getName().substring(0,1);
-            if(!legSenateMap.containsKey(index)){
-                legSenateMap.put(index,i);
+    private void getLegSenateIndex(List<Leg> list) {
+        legSenateMap = new TreeMap<>();
+        for (int i = 0; i < list.size(); i++) {
+            Leg leg = list.get(i);
+            String index = leg.getName().substring(0, 1);
+            if (!legSenateMap.containsKey(index)) {
+                legSenateMap.put(index, i);
             }
         }
 
     }
 
 
-
-
-    private void sideBarDisplay(LinearLayout layout){
+    private void sideBarDisplay(LinearLayout layout) {
         TextView tv;
-        Map<String,Integer> tmp;
+        Map<String, Integer> tmp;
 
-        if (layout.getId()==R.id.legStateIndex){
-            tmp=legStateMap;
-        }else if(layout.getId()==R.id.legHouseIndex){
-            tmp=legHouseMap;
-        }else {
-            tmp=legSenateMap;
+        if (layout.getId() == R.id.legStateIndex) {
+            tmp = legStateMap;
+        } else if (layout.getId() == R.id.legHouseIndex) {
+            tmp = legHouseMap;
+        } else {
+            tmp = legSenateMap;
         }
 
-        List<String> sideIndex=new ArrayList<>(tmp.keySet());
-        for (String index:sideIndex){
-            tv=(TextView)getActivity().getLayoutInflater().inflate(R.layout.sidebar_index,null);
+        List<String> sideIndex = new ArrayList<>(tmp.keySet());
+        for (String index : sideIndex) {
+            tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.sidebar_index, null);
             tv.setText(index);
             tv.setOnClickListener(this);
             layout.addView(tv);
@@ -417,16 +439,15 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
 
     @Override
     public void onClick(View view) {
-        TextView tmpTv= (TextView) view;
-        if (tabHost.getCurrentTab()==0){
+        TextView tmpTv = (TextView) view;
+        if (tabHost.getCurrentTab() == 0) {
             legByStateView.setSelection(legStateMap.get(tmpTv.getText()));
-        }else if(tabHost.getCurrentTab()==1){
+        } else if (tabHost.getCurrentTab() == 1) {
             legByHouseView.setSelection(legHouseMap.get(tmpTv.getText()));
-        }else {
+        } else {
             legBySenateView.setSelection(legSenateMap.get(tmpTv.getText()));
         }
     }
-
 
 
 }
