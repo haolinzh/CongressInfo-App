@@ -2,7 +2,6 @@ package com.example.nova.congressinfo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -13,9 +12,8 @@ public class AboutmeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("click","abooutme2");
         setTitle("About Me");
-        setContentView(R.layout.fragment_aboutme);
+        setContentView(R.layout.activity_aboutme);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

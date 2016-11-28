@@ -9,9 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,10 +79,13 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_fav) {
-            Toast.makeText(this,"Favorites",Toast.LENGTH_SHORT).show();
+            setTitle("Favorites");
+            FavFragment favFragment=new FavFragment();
+            FragmentManager manager=getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
 
         } else if (id == R.id.nav_aboutme) {
-              Log.d("click","abooutme1");
+
               Intent intent=new Intent(MainActivity.this, AboutmeActivity.class);
               startActivity(intent);
 
