@@ -1,5 +1,6 @@
 package com.example.nova.congressinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -82,7 +84,10 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this,"Favorites",Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_aboutme) {
-            Toast.makeText(this,"Aboutme",Toast.LENGTH_SHORT).show();
+              Log.d("click","abooutme1");
+              Intent intent=new Intent(MainActivity.this, AboutmeActivity.class);
+              startActivity(intent);
+
 
         }
 

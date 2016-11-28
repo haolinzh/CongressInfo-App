@@ -152,7 +152,6 @@ public class LegDetail extends AppCompatActivity {
 
                 String legFbId="N.A";
                 String legTwId="N.A";
-                String legWebSite="N.A";
 
                 if (singleLeg.has("facebook_id")){
                     legFbId=singleLeg.getString("facebook_id");
@@ -160,9 +159,8 @@ public class LegDetail extends AppCompatActivity {
                 if (singleLeg.has("twitter_id")){
                     legTwId=singleLeg.getString("twitter_id");
                 }
-                if (singleLeg.has("website")){
-                    legWebSite=singleLeg.getString("website");
-                }
+
+                String  legWebSite=singleLeg.getString("website");
 
 
 
@@ -300,7 +298,7 @@ public class LegDetail extends AppCompatActivity {
             imgBlegWeb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!WebSite.equals("N.A")){
+                    if (!WebSite.equals("null")){
                         String url=WebSite;
                         Uri uri = Uri.parse(url);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
