@@ -46,11 +46,11 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     public void onResume() {
         super.onResume();
 
-        adapter = new BillItemAdapter(getActivity().getApplicationContext(),new ArrayList<Bill>());
-        favBillView.setAdapter(adapter);
+
+        adapter.clear();
+        adapter.notifyDataSetChanged();
 
 
-//        adapter.notifyDataSetChanged();
         Gson gson=new Gson();
         Iterator<String> itr = MainActivity.favBill.iterator();
 
@@ -91,21 +91,21 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost.setCurrentTab(1);
         tabHost.setOnTabChangedListener(this);
 
-//
-//        Gson gson=new Gson();
-//
-//        Iterator<String> itr = favBill.iterator();
-//
-//        while(itr.hasNext()){
-//            String str = itr.next();
-//            Bill b = gson.fromJson(str, Bill.class);
-//            favBillList.add(b);
-//        }
-//
-//
-//        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
-//        favBillView.setAdapter(adapter);
-//        favBillView.setOnItemClickListener(onItemClickListener);
+
+        Gson gson=new Gson();
+
+        Iterator<String> itr = MainActivity.favBill.iterator();
+
+        while(itr.hasNext()){
+            String str = itr.next();
+            Bill b = gson.fromJson(str, Bill.class);
+            favBillList.add(b);
+        }
+
+
+        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+        favBillView.setAdapter(adapter);
+        favBillView.setOnItemClickListener(onItemClickListener);
 
 
         return layout;
