@@ -22,7 +22,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by NOVA on 16/11/22.
@@ -191,25 +194,67 @@ public class BillDetail extends AppCompatActivity {
 
             sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);
 
+            Boolean alreadyFav=false;
+            Gson gson=new Gson();
 
-            imgBBillFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            Set<String> set= sharedPref.getStringSet("favBillJson",new HashSet<String>());
+            Iterator<String> itr = set.iterator();
 
-                    SharedPreferences.Editor e=sharedPref.edit();
-                    Gson gson = new Gson();
-
-                    Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
-
-                    String billJson = gson.toJson(favBill);
-
-                    MainActivity.favBill.add(billJson);
-
-                    e.putStringSet("favBillJson",MainActivity.favBill);
-                    e.commit();
-
+            while(itr.hasNext()){
+                String str = itr.next();
+                Bill b = gson.fromJson(str, Bill.class);
+                String tmpid=b.getBillId();
+                if(tmpid.equals(id.toUpperCase())){
+                    alreadyFav=true;
+                    break;
                 }
-            });
+            }
+
+
+            if (!alreadyFav){
+                imgBBillFav.setBackgroundResource(R.drawable.fav);
+
+                imgBBillFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imgBBillFav.setBackgroundResource(R.drawable.yellow);
+                        SharedPreferences.Editor e=sharedPref.edit();
+                        Gson gson = new Gson();
+
+                        Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
+
+                        String billJson = gson.toJson(favBill);
+
+                        MainActivity.favBill.add(billJson);
+
+                        e.putStringSet("favBillJson",MainActivity.favBill);
+                        e.commit();
+
+                    }
+                });
+
+            }else {
+
+                imgBBillFav.setBackgroundResource(R.drawable.yellow);
+                imgBBillFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imgBBillFav.setBackgroundResource(R.drawable.fav);
+                        SharedPreferences.Editor e=sharedPref.edit();
+                        Gson gson = new Gson();
+
+                        Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
+
+                        String billJson = gson.toJson(favBill);
+                        MainActivity.favBill.remove(billJson);
+
+                        e.putStringSet("favBillJson",MainActivity.favBill);
+                        e.commit();
+                    }
+                });
+            }
+
+
 
 
         }

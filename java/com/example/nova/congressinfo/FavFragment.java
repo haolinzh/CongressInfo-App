@@ -15,6 +15,7 @@ import android.widget.TabHost;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         sharedPref=getActivity().getSharedPreferences("FavSp",MODE_PRIVATE);
         Gson gson=new Gson();
 
-        Set<String> favBillJson= sharedPref.getStringSet("favBillJson",null);
+        Set<String> favBillJson= sharedPref.getStringSet("favBillJson",new HashSet<String>());
 
         Iterator<String> itr = favBillJson.iterator();
 
