@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -71,8 +72,13 @@ public class BillDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            android.app.FragmentManager manager = getFragmentManager();
+           android.app.FragmentManager manager = getFragmentManager();
             manager.popBackStack();
+
+ //           FavFragment favFragment=new FavFragment();
+ //           FragmentManager manager=getSupportFragmentManager();
+ //           manager.beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
+
             finish();
             return true;
         } else {
@@ -230,6 +236,7 @@ public class BillDetail extends AppCompatActivity {
                         e.putStringSet("favBillJson",MainActivity.favBill);
                         e.commit();
 
+
                     }
                 });
 
@@ -250,6 +257,11 @@ public class BillDetail extends AppCompatActivity {
 
                         e.putStringSet("favBillJson",MainActivity.favBill);
                         e.commit();
+
+
+                        Log.d("favbill",String.valueOf(MainActivity.favBill.size()));
+
+//
                     }
                 });
             }

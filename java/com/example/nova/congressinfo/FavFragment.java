@@ -15,12 +15,9 @@ import android.widget.TabHost;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.example.nova.congressinfo.R.id.listViewFavBill;
 import static com.example.nova.congressinfo.R.id.listViewFavComm;
 import static com.example.nova.congressinfo.R.id.listViewFavLeg;
@@ -44,6 +41,32 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
 
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Log.d("Res","***************************");
+//
+//
+//        Gson gson=new Gson();
+//
+//        Iterator<String> itr = MainActivity.favBill.iterator();
+//
+//        while(itr.hasNext()){
+//            String str = itr.next();
+//            Bill b = gson.fromJson(str, Bill.class);
+//            favBillList.add(b);
+//        }
+//
+//        BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+//        favBillView.setAdapter(adapter);
+//        favBillView.setOnItemClickListener(onItemClickListener);
+//
+//
+//
+//    }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,12 +87,9 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost.setCurrentTab(0);
         tabHost.setOnTabChangedListener(this);
 
-        sharedPref=getActivity().getSharedPreferences("FavSp",MODE_PRIVATE);
         Gson gson=new Gson();
 
-        Set<String> favBillJson= sharedPref.getStringSet("favBillJson",new HashSet<String>());
-
-        Iterator<String> itr = favBillJson.iterator();
+        Iterator<String> itr = MainActivity.favBill.iterator();
 
         while(itr.hasNext()){
             String str = itr.next();

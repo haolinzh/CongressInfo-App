@@ -17,14 +17,19 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     public static Set<String> favBill;
     SharedPreferences sharedPref;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);
+    //    favBill=new HashSet<>();
         favBill= sharedPref.getStringSet("favBillJson",new HashSet<String>());
 
         setContentView(R.layout.activity_main);
