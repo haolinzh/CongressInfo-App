@@ -1,14 +1,25 @@
 package com.example.nova.congressinfo;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.nova.congressinfo.R.id.listViewFavBill;
 import static com.example.nova.congressinfo.R.id.listViewFavComm;
 import static com.example.nova.congressinfo.R.id.listViewFavLeg;
@@ -21,11 +32,14 @@ import static com.example.nova.congressinfo.R.id.listViewFavLeg;
 public class FavFragment extends Fragment implements TabHost.OnTabChangeListener {
     RelativeLayout layout;
     TabHost tabHost;
+    List<Bill> favBillList;
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
+    SharedPreferences sharedPref;
 
     public FavFragment(){
+        favBillList=new ArrayList<>();
 
     }
 
@@ -49,8 +63,37 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost.setCurrentTab(0);
         tabHost.setOnTabChangedListener(this);
 
+        sharedPref=getActivity().getSharedPreferences("FavSp",MODE_PRIVATE);
+        Gson gson=new Gson();
+
+        Set<String> favBillJson= sharedPref.getStringSet("favBillJson",null);
+
+        Iterator<String> itr = favBillJson.iterator();
+
+        while(itr.hasNext()){
+            String str = itr.next();
+            Bill b = gson.fromJson(str, Bill.class);
+            favBillList.add(b);
+        }
+
+        BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+        favBillView.setAdapter(adapter);
+        favBillView.setOnItemClickListener(onItemClickListener);
+
         return layout;
     }
+
+
+    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent=new Intent(getActivity().getApplicationContext(),BillDetail.class);
+            Bill bill =(Bill) adapterView.getAdapter().getItem(i);
+            intent.putExtra("billId",bill.getBillId());
+            startActivity(intent);
+
+        }
+    };
 
 
     @Override

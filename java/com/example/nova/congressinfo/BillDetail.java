@@ -1,10 +1,15 @@
 package com.example.nova.congressinfo;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +41,9 @@ public class BillDetail extends AppCompatActivity {
     TextView tvConUrl;
     TextView tvVerStatus;
     TextView tvBillUrl;
+    ImageButton imgBBillFav;
+    SharedPreferences sharedPref;
+
 
 
     @Override
@@ -48,8 +56,10 @@ public class BillDetail extends AppCompatActivity {
         setTitle("Bill Info");
         id = getIntent().getStringExtra("billId").toLowerCase();
 
+
         DetBTask detBTask = new DetBTask();
         detBTask.execute("http://104.198.0.197:8080/bills?bill_id=" + id + "&apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a");
+
 
     }
 
@@ -165,6 +175,7 @@ public class BillDetail extends AppCompatActivity {
             tvConUrl = (TextView) findViewById(R.id.detBconurl);
             tvVerStatus = (TextView) findViewById(R.id.detBvstatus);
             tvBillUrl = (TextView) findViewById(R.id.detBburl);
+            imgBBillFav= (ImageButton) findViewById(R.id.imgBBillFav);
 
 
             tvId.setText(billDetail.get(0));
@@ -177,6 +188,28 @@ public class BillDetail extends AppCompatActivity {
             tvConUrl.setText(billDetail.get(7));
             tvVerStatus.setText(billDetail.get(8));
             tvBillUrl.setText(billDetail.get(9));
+
+            sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);
+
+
+            imgBBillFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    SharedPreferences.Editor e=sharedPref.edit();
+                    Gson gson = new Gson();
+
+                    Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
+
+                    String billJson = gson.toJson(favBill);
+
+                    MainActivity.favBill.add(billJson);
+
+                    e.putStringSet("favBillJson",MainActivity.favBill);
+                    e.commit();
+
+                }
+            });
 
 
         }
