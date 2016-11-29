@@ -1,9 +1,9 @@
 package com.example.nova.congressinfo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,36 +34,40 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
-    SharedPreferences sharedPref;
+    BillItemAdapter adapter;
+   // SharedPreferences sharedPref;
 
     public FavFragment(){
         favBillList=new ArrayList<>();
 
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Log.d("Res","***************************");
-//
-//
-//        Gson gson=new Gson();
-//
-//        Iterator<String> itr = MainActivity.favBill.iterator();
-//
-//        while(itr.hasNext()){
-//            String str = itr.next();
-//            Bill b = gson.fromJson(str, Bill.class);
-//            favBillList.add(b);
-//        }
-//
-//        BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
-//        favBillView.setAdapter(adapter);
-//        favBillView.setOnItemClickListener(onItemClickListener);
-//
-//
-//
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter = new BillItemAdapter(getActivity().getApplicationContext(),new ArrayList<Bill>());
+        favBillView.setAdapter(adapter);
+
+
+//        adapter.notifyDataSetChanged();
+        Gson gson=new Gson();
+        Iterator<String> itr = MainActivity.favBill.iterator();
+
+        Log.d("size",(String.valueOf(MainActivity.favBill.size())) );
+
+        while(itr.hasNext()){
+            String str = itr.next();
+            Bill b = gson.fromJson(str, Bill.class);
+            favBillList.add(b);
+        }
+
+        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+        favBillView.setAdapter(adapter);
+        favBillView.setOnItemClickListener(onItemClickListener);
+
+
+    }
 
 
 
@@ -84,22 +88,25 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("COMMITTEES").setContent(R.id.tabFavComm));
 
 
-        tabHost.setCurrentTab(0);
+        tabHost.setCurrentTab(1);
         tabHost.setOnTabChangedListener(this);
 
-        Gson gson=new Gson();
+//
+//        Gson gson=new Gson();
+//
+//        Iterator<String> itr = favBill.iterator();
+//
+//        while(itr.hasNext()){
+//            String str = itr.next();
+//            Bill b = gson.fromJson(str, Bill.class);
+//            favBillList.add(b);
+//        }
+//
+//
+//        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+//        favBillView.setAdapter(adapter);
+//        favBillView.setOnItemClickListener(onItemClickListener);
 
-        Iterator<String> itr = MainActivity.favBill.iterator();
-
-        while(itr.hasNext()){
-            String str = itr.next();
-            Bill b = gson.fromJson(str, Bill.class);
-            favBillList.add(b);
-        }
-
-        BillItemAdapter adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
-        favBillView.setAdapter(adapter);
-        favBillView.setOnItemClickListener(onItemClickListener);
 
         return layout;
     }

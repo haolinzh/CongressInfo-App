@@ -75,10 +75,6 @@ public class BillDetail extends AppCompatActivity {
            android.app.FragmentManager manager = getFragmentManager();
             manager.popBackStack();
 
- //           FavFragment favFragment=new FavFragment();
- //           FragmentManager manager=getSupportFragmentManager();
- //           manager.beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
-
             finish();
             return true;
         } else {
