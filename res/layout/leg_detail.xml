@@ -15,8 +15,7 @@
             android:gravity="right">
 
             <ImageButton
-                android:background= "@drawable/fav"
-                android:id="@+id/legDetImgBFav"
+                android:id="@+id/imgLLegFav"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="8dp" />

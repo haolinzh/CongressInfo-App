@@ -3,7 +3,6 @@ package com.example.nova.congressinfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +29,24 @@ import static com.example.nova.congressinfo.R.id.listViewFavLeg;
 public class FavFragment extends Fragment implements TabHost.OnTabChangeListener {
     RelativeLayout layout;
     TabHost tabHost;
+
     List<Bill> favBillList;
+    List<Comm> favCommList;
+    List<Leg> favLegList;
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
     BillItemAdapter badapter;
-   // SharedPreferences sharedPref;
+    CommItemAdapter cadapter;
+    LegItemAdapter ladapter;
+    Gson gson;
+
 
     public FavFragment(){
         favBillList=new ArrayList<>();
-
+        favCommList=new ArrayList<>();
+        favLegList=new ArrayList<>();
+        gson=new Gson();
     }
 
     @Override
@@ -48,21 +55,47 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
 
         badapter.clear();
         badapter.notifyDataSetChanged();
-        
-        Gson gson=new Gson();
-        Iterator<String> itr = MainActivity.favBill.iterator();
+        cadapter.clear();
+        cadapter.notifyDataSetChanged();
+        ladapter.clear();
+        ladapter.notifyDataSetChanged();
 
-        Log.d("size",(String.valueOf(MainActivity.favBill.size())) );
-
-        while(itr.hasNext()){
-            String str = itr.next();
+        Iterator<String> billitr = MainActivity.favBill.iterator();
+        while(billitr.hasNext()){
+            String str = billitr.next();
             Bill b = gson.fromJson(str, Bill.class);
             favBillList.add(b);
         }
-
         badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
         favBillView.setAdapter(badapter);
         favBillView.setOnItemClickListener(onItemClickListenerb);
+
+
+
+        Iterator<String> commitr = MainActivity.favComm.iterator();
+        while(commitr.hasNext()){
+            String str = commitr.next();
+            Comm c = gson.fromJson(str, Comm.class);
+            favCommList.add(c);
+        }
+
+        cadapter = new CommItemAdapter(getActivity().getApplicationContext(), favCommList);
+        favCommView.setAdapter(cadapter);
+        favCommView.setOnItemClickListener(onItemClickListenerc);
+
+
+
+        Iterator<String> legitr = MainActivity.favLeg.iterator();
+        while(legitr.hasNext()){
+            String str = legitr.next();
+            Leg l = gson.fromJson(str, Leg.class);
+            favLegList.add(l);
+        }
+
+        ladapter = new LegItemAdapter(getActivity().getApplicationContext(), favLegList);
+        favLegView.setAdapter(ladapter);
+        favLegView.setOnItemClickListener(onItemClickListenerl);
+
 
 
     }
@@ -80,30 +113,46 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favBillView = (ListView) layout.findViewById(listViewFavBill);
         favCommView = (ListView) layout.findViewById(listViewFavComm);
 
-
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("LEGISLATORS").setContent(R.id.tabFavLeg));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("BILLS").setContent(R.id.tabFavBill));
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("COMMITTEES").setContent(R.id.tabFavComm));
 
-
-        tabHost.setCurrentTab(1);
+        tabHost.setCurrentTab(0);
         tabHost.setOnTabChangedListener(this);
 
 
-        Gson gson=new Gson();
-
-        Iterator<String> itr = MainActivity.favBill.iterator();
-
-        while(itr.hasNext()){
-            String str = itr.next();
+        Iterator<String> billitr = MainActivity.favBill.iterator();
+        while(billitr.hasNext()){
+            String str = billitr.next();
             Bill b = gson.fromJson(str, Bill.class);
             favBillList.add(b);
         }
-
-
         badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
         favBillView.setAdapter(badapter);
         favBillView.setOnItemClickListener(onItemClickListenerb);
+
+
+        Iterator<String> commitr = MainActivity.favComm.iterator();
+        while(commitr.hasNext()){
+            String str = commitr.next();
+            Comm c = gson.fromJson(str, Comm.class);
+            favCommList.add(c);
+        }
+        cadapter = new CommItemAdapter(getActivity().getApplicationContext(), favCommList);
+        favCommView.setAdapter(cadapter);
+        favCommView.setOnItemClickListener(onItemClickListenerc);
+
+
+        Iterator<String> legitr = MainActivity.favLeg.iterator();
+        while(legitr.hasNext()){
+            String str = legitr.next();
+            Leg l = gson.fromJson(str, Leg.class);
+            favLegList.add(l);
+        }
+
+        ladapter = new LegItemAdapter(getActivity().getApplicationContext(), favLegList);
+        favLegView.setAdapter(ladapter);
+        favLegView.setOnItemClickListener(onItemClickListenerl);
 
 
         return layout;
@@ -116,6 +165,30 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Intent intent=new Intent(getActivity().getApplicationContext(),BillDetail.class);
             Bill bill =(Bill) adapterView.getAdapter().getItem(i);
             intent.putExtra("billId",bill.getBillId());
+            startActivity(intent);
+
+        }
+    };
+
+
+    private AdapterView.OnItemClickListener onItemClickListenerc=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent=new Intent(getActivity().getApplicationContext(),CommDetail.class);
+            Comm comm =(Comm) adapterView.getAdapter().getItem(i);
+            intent.putExtra("comm",comm);
+            startActivity(intent);
+
+        }
+    };
+
+
+    private AdapterView.OnItemClickListener onItemClickListenerl=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent=new Intent(getActivity().getApplicationContext(),LegDetail.class);
+            Leg leg =(Leg) adapterView.getAdapter().getItem(i);
+            intent.putExtra("legId",leg.getId());
             startActivity(intent);
 
         }

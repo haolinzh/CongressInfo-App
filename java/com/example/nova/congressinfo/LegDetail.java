@@ -1,6 +1,7 @@
 package com.example.nova.congressinfo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -29,7 +31,10 @@ import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by NOVA on 16/11/21.
@@ -56,6 +61,8 @@ public class LegDetail extends AppCompatActivity {
     ImageButton imgBlegFB;
     ImageButton imgBlegTW;
     ImageButton imgBlegWeb;
+    SharedPreferences sharedPref;
+    Gson gson;
 
 
 
@@ -67,6 +74,8 @@ public class LegDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Legislator Info");
+        gson=new Gson();
+
         id = getIntent().getStringExtra("legId");
 
         Log.d("id",id);
@@ -149,6 +158,8 @@ public class LegDetail extends AppCompatActivity {
                 String legFax=singleLeg.getString("fax");
                 String legBirthday=singleLeg.getString("birthday");
                 String legParty = singleLeg.getString("party");
+                String legDistrict=singleLeg.getString("district");
+                String legStateName=singleLeg.getString("state_name");
 
                 String legFbId="N.A";
                 String legTwId="N.A";
@@ -179,6 +190,8 @@ public class LegDetail extends AppCompatActivity {
                 legDetail.add(legFbId);
                 legDetail.add(legTwId);
                 legDetail.add(legWebSite);
+                legDetail.add(legDistrict);
+                legDetail.add(legStateName);
 
                 return legDetail;
 
@@ -220,7 +233,7 @@ public class LegDetail extends AppCompatActivity {
             imgParty=(ImageView) findViewById(R.id.imageViewParty);
             termProgress= (ProgressBar) findViewById(R.id.TermBar);
             imgDet= (ImageView) findViewById(R.id.ivDetLeg);
-            imgBlegFav= (ImageButton) findViewById(R.id.legDetImgBFav);
+            imgBlegFav= (ImageButton) findViewById(R.id.imgLLegFav);
             imgBlegFB= (ImageButton) findViewById(R.id.legDetImgBFB);
             imgBlegTW= (ImageButton) findViewById(R.id.legDetImgBTW);
             imgBlegWeb= (ImageButton) findViewById(R.id.legDetImgBWeb);
@@ -242,12 +255,11 @@ public class LegDetail extends AppCompatActivity {
             if (p.equals("R")){
                 tvParty.setText("Republican");
                 Picasso.with(getApplicationContext()).load(R.drawable.r).resize(30,30).into(imgParty);
-        //        imgParty.setImageResource(R.drawable.r);
 
             }else if(p.equals("D")){
                 tvParty.setText("Democratic");
                 Picasso.with(getApplicationContext()).load(R.drawable.d).resize(30,30).into(imgParty);
-        //        imgParty.setImageResource(R.drawable.d);
+
             }else {
                 tvParty.setText("Independence");
                 Picasso.with(getApplicationContext()).load(R.drawable.i).resize(30,30).into(imgParty);
@@ -309,6 +321,77 @@ public class LegDetail extends AppCompatActivity {
 
                 }
             });
+
+
+
+            sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);
+
+            Boolean alreadyFav=false;
+
+            Set<String> set= sharedPref.getStringSet("favLegJson",new HashSet<String>());
+            Iterator<String> itr = set.iterator();
+
+            while(itr.hasNext()){
+                String str = itr.next();
+                Bill b = gson.fromJson(str, Bill.class);
+                String tmpid=b.getBillId();
+                if(tmpid.equals(id.toUpperCase())){
+                    alreadyFav=true;
+                    break;
+                }
+            }
+
+            if (!alreadyFav){
+                imgBlegFav.setBackgroundResource(R.drawable.fav);
+
+                imgBlegFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imgBlegFav.setBackgroundResource(R.drawable.yellow);
+                        SharedPreferences.Editor e=sharedPref.edit();
+
+                        Leg favLeg=new Leg(legDetail.get(0),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
+
+                        String legJson = gson.toJson(favLeg);
+                        MainActivity.favLeg.add(legJson);
+
+                        e.putStringSet("favLegJson",  MainActivity.favLeg);
+                        e.commit();
+
+                        Log.d("favleg",String.valueOf(MainActivity.favLeg.size()));
+
+
+                    }
+                });
+
+            }else {
+                imgBlegFav.setBackgroundResource(R.drawable.yellow);
+
+                imgBlegFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imgBlegFav.setBackgroundResource(R.drawable.fav);
+                        SharedPreferences.Editor e=sharedPref.edit();
+
+                        Leg favLeg=new Leg(legDetail.get(0),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
+
+                        String legJson = gson.toJson(favLeg);
+                        MainActivity.favLeg.remove(legJson);
+
+                        e.putStringSet("favLegJson",  MainActivity.favLeg);
+                        e.commit();
+
+                        Log.d("favleg",String.valueOf(MainActivity.favLeg.size()));
+
+
+                    }
+                });
+
+            }
+
+
+
+
 
 
         }

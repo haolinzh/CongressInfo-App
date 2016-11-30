@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity
 
     public static Set<String> favBill;
     public static Set<String> favComm;
+    public static Set<String> favLeg;
     SharedPreferences sharedPref;
-
 
 
 
@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity
         sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);
         favBill= sharedPref.getStringSet("favBillJson",new HashSet<String>());
         favComm= sharedPref.getStringSet("favCommJson",new HashSet<String>());
+        favLeg= sharedPref.getStringSet("favLegJson",new HashSet<String>());
 
         setContentView(R.layout.activity_main);
-
         setTitle("Legislators");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
