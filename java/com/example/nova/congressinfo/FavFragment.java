@@ -46,7 +46,6 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     public void onResume() {
         super.onResume();
 
-
         adapter.clear();
         adapter.notifyDataSetChanged();
 

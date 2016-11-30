@@ -41,17 +41,17 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="30dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
                             android:background="#c3c3c3"
-                            android:id="@+id/legStateIndex"/>
+                            android:id="@+id/legStateIndex"
+                            android:layout_width="35dp" />
 
                         <ListView
                             android:id="@+id/legByStateView"
-                            android:layout_width="345dp"
                             android:layout_height="match_parent"
-                            android:scrollbars="none"/>
+                            android:scrollbars="none"
+                            android:layout_width="348dp" />
                     </FrameLayout>
 
                 </LinearLayout>
@@ -68,17 +68,17 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="30dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
                             android:background="#c3c3c3"
-                            android:id="@+id/legHouseIndex"/>
+                            android:id="@+id/legHouseIndex"
+                            android:layout_width="35dp" />
 
                         <ListView
                             android:id="@+id/legByHouseView"
-                            android:layout_width="340dp"
                             android:layout_height="match_parent"
-                            android:scrollbars="none"/>
+                            android:scrollbars="none"
+                            android:layout_width="348dp" />
                     </FrameLayout>
 
 
@@ -96,17 +96,17 @@
 
                         <LinearLayout
                             android:orientation="vertical"
-                            android:layout_width="30dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
                             android:background="#c3c3c3"
-                            android:id="@+id/legSenateIndex"/>
+                            android:id="@+id/legSenateIndex"
+                            android:layout_width="35dp" />
 
                         <ListView
                             android:id="@+id/legBySenateView"
-                            android:layout_width="345dp"
                             android:layout_height="match_parent"
-                            android:scrollbars="none"/>
+                            android:scrollbars="none"
+                            android:layout_width="348dp" />
                     </FrameLayout>
 
                 </LinearLayout>

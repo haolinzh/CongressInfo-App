@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroud">
 
-    <TextView
-        android:text="TextView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/billId"
-        android:textStyle="bold"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:textSize="18sp" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_height="10dp"
+            android:src="@drawable/forward"
+            android:id="@+id/imageView5"
+            android:layout_gravity="end"
+            android:layout_width="25dp"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/billId"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:textSize="18sp" />
+    </FrameLayout>
 
     <TextView
         android:text="TextView"
