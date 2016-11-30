@@ -240,9 +240,10 @@ public class LegDetail extends AppCompatActivity {
 
            int percent= calTermPercent(legDetail.get(4),legDetail.get(5));
 
+
             tvName.setText(legDetail.get(0));
             tvEmail.setText(legDetail.get(1));
-            tvChamber.setText(legDetail.get(2));
+            tvChamber.setText(Character.toUpperCase(legDetail.get(2).charAt(0)) + legDetail.get(2).substring(1));
             tvContact.setText(legDetail.get(3));
             tvSterm.setText(DateFormat.dateFormat(legDetail.get(4)));
             tvEterm.setText(DateFormat.dateFormat(legDetail.get(5)));
@@ -254,21 +255,21 @@ public class LegDetail extends AppCompatActivity {
 
             if (p.equals("R")){
                 tvParty.setText("Republican");
-                Picasso.with(getApplicationContext()).load(R.drawable.r).resize(30,30).into(imgParty);
+                Picasso.with(getApplicationContext()).load(R.drawable.r).resize(60,60).into(imgParty);
 
             }else if(p.equals("D")){
                 tvParty.setText("Democratic");
-                Picasso.with(getApplicationContext()).load(R.drawable.d).resize(30,30).into(imgParty);
+                Picasso.with(getApplicationContext()).load(R.drawable.d).resize(60,60).into(imgParty);
 
             }else {
                 tvParty.setText("Independence");
-                Picasso.with(getApplicationContext()).load(R.drawable.i).resize(30,30).into(imgParty);
+                Picasso.with(getApplicationContext()).load(R.drawable.i).resize(60,60).into(imgParty);
 
 
             }
 
             String picUrl="http://theunitedstates.io/images/congress/original/"+id+".jpg";
-            Picasso.with(getApplicationContext()).load(picUrl).resize(67,83).into(imgDet);
+            Picasso.with(getApplicationContext()).load(picUrl).resize(134,166).into(imgDet);
             termProgress.setProgress(percent);
 
 
@@ -388,8 +389,6 @@ public class LegDetail extends AppCompatActivity {
                 });
 
             }
-
-
 
 
 

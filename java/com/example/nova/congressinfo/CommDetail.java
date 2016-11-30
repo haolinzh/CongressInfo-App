@@ -7,13 +7,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import static com.example.nova.congressinfo.R.drawable.s;
 
 /**
  * Created by NOVA on 16/11/27.
@@ -29,6 +33,7 @@ public class CommDetail extends AppCompatActivity {
     TextView tvOffice;
     SharedPreferences sharedPref;
     ImageButton imgCCommFav;
+    ImageView imgCCommChamber;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +52,23 @@ public class CommDetail extends AppCompatActivity {
         tvContact= (TextView) findViewById(R.id.detCcontact);
         tvOffice= (TextView) findViewById(R.id.detCoffice);
         imgCCommFav= (ImageButton) findViewById(R.id.imgCCommFav);
+        imgCCommChamber= (ImageView) findViewById(R.id.commDetChamber);
+
+        
 
         tvId.setText(comm.getCommId());
         tvName.setText(comm.getCommName());
-        tvChamber.setText(comm.getCommChamber());
+        tvChamber.setText(Character.toUpperCase(comm.getCommChamber().charAt(0)) + comm.getCommChamber().substring(1));
         tvPid.setText(comm.getCommPid());
         tvContact.setText(comm.getCommPhone());
         tvOffice.setText(comm.getCommOffice());
+
+        if (comm.getCommChamber().equals("house")){
+            Picasso.with(getApplicationContext()).load(R.drawable.h).resize(60,60).into(imgCCommChamber);
+        }else {
+            Picasso.with(getApplicationContext()).load(s).resize(60,60).into(imgCCommChamber);
+        }
+
 
 
         sharedPref=getSharedPreferences("FavSp",MODE_PRIVATE);

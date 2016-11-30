@@ -50,6 +50,7 @@ public class BillDetail extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,12 +184,12 @@ public class BillDetail extends AppCompatActivity {
             imgBBillFav= (ImageButton) findViewById(R.id.imgBBillFav);
 
 
-            tvId.setText(billDetail.get(0));
+            tvId.setText(billDetail.get(0).toUpperCase());
             tvTitle.setText(billDetail.get(1));
-            tvType.setText(billDetail.get(2));
+            tvType.setText(billDetail.get(2).toUpperCase());
             tvSponsor.setText(billDetail.get(3));
-            tvChamber.setText(billDetail.get(4));
-            tvStatus.setText(billDetail.get(5));
+            tvChamber.setText(Character.toUpperCase(billDetail.get(4).charAt(0)) + billDetail.get(4).substring(1));
+            tvStatus.setText(Character.toUpperCase(billDetail.get(5).charAt(0)) + billDetail.get(5).substring(1));
             tvIntroduced.setText(billDetail.get(6));
             tvConUrl.setText(billDetail.get(7));
             tvVerStatus.setText(billDetail.get(8));
