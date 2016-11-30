@@ -257,7 +257,7 @@ public class BillDetail extends AppCompatActivity {
 
                         Log.d("favbill",String.valueOf(MainActivity.favBill.size()));
 
-//
+
                     }
                 });
             }

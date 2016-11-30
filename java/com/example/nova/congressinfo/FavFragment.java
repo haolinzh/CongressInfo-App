@@ -34,7 +34,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
-    BillItemAdapter adapter;
+    BillItemAdapter badapter;
    // SharedPreferences sharedPref;
 
     public FavFragment(){
@@ -46,10 +46,9 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     public void onResume() {
         super.onResume();
 
-        adapter.clear();
-        adapter.notifyDataSetChanged();
-
-
+        badapter.clear();
+        badapter.notifyDataSetChanged();
+        
         Gson gson=new Gson();
         Iterator<String> itr = MainActivity.favBill.iterator();
 
@@ -61,9 +60,9 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             favBillList.add(b);
         }
 
-        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
-        favBillView.setAdapter(adapter);
-        favBillView.setOnItemClickListener(onItemClickListener);
+        badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+        favBillView.setAdapter(badapter);
+        favBillView.setOnItemClickListener(onItemClickListenerb);
 
 
     }
@@ -102,16 +101,16 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         }
 
 
-        adapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
-        favBillView.setAdapter(adapter);
-        favBillView.setOnItemClickListener(onItemClickListener);
+        badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
+        favBillView.setAdapter(badapter);
+        favBillView.setOnItemClickListener(onItemClickListenerb);
 
 
         return layout;
     }
 
 
-    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener onItemClickListenerb=new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent=new Intent(getActivity().getApplicationContext(),BillDetail.class);
