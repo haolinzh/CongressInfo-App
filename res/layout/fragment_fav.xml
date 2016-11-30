@@ -28,10 +28,24 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:id="@+id/listViewFavLeg"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:background="#c3c3c3"
+                            android:id="@+id/favlegIndexLayout"
+                            android:layout_width="35dp"/>
+
+                        <ListView
+                            android:id="@+id/listViewFavLeg"
+                            android:layout_width="348dp"
+                            android:layout_height="match_parent" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

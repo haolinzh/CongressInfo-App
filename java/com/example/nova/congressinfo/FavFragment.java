@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -21,6 +23,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static com.example.nova.congressinfo.R.id.listViewFavBill;
 import static com.example.nova.congressinfo.R.id.listViewFavComm;
@@ -31,7 +35,7 @@ import static com.example.nova.congressinfo.R.id.listViewFavLeg;
  * Created by NOVA on 16/11/28.
  */
 
-public class FavFragment extends Fragment implements TabHost.OnTabChangeListener {
+public class FavFragment extends Fragment implements TabHost.OnTabChangeListener, View.OnClickListener {
     RelativeLayout layout;
     TabHost tabHost;
 
@@ -41,10 +45,13 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
+    ListView favLegIndex;
     BillItemAdapter badapter;
     CommItemAdapter cadapter;
     LegItemAdapter ladapter;
     Gson gson;
+    Map<String,Integer> legMap;
+ //   LinearLayout sideLayout;
 
 
     public FavFragment(){
@@ -103,7 +110,9 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favLegView.setAdapter(ladapter);
         favLegView.setOnItemClickListener(onItemClickListenerl);
 
-
+        getLegIndex(favLegList);
+        LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.favlegIndexLayout);
+        sideBarDisplay(sideLayout);
 
     }
 
@@ -119,6 +128,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favLegView = (ListView) layout.findViewById(listViewFavLeg);
         favBillView = (ListView) layout.findViewById(listViewFavBill);
         favCommView = (ListView) layout.findViewById(listViewFavComm);
+
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("LEGISLATORS").setContent(R.id.tabFavLeg));
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("BILLS").setContent(R.id.tabFavBill));
@@ -166,6 +176,13 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favLegView.setOnItemClickListener(onItemClickListenerl);
 
 
+
+
+        getLegIndex(favLegList);
+        LinearLayout sideLayout = (LinearLayout) layout.findViewById(R.id.favlegIndexLayout);
+        sideBarDisplay(sideLayout);
+
+
         return layout;
     }
 
@@ -206,6 +223,43 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     };
 
 
+    private void getLegIndex(List<Leg> list) {
+        legMap = new TreeMap<>();
+        for (int i = 0; i < list.size(); i++) {
+            Leg leg = list.get(i);
+            String index = leg.getState().substring(0, 1);
+            if (!legMap.containsKey(index)) {
+                legMap.put(index, i);
+            }
+        }
+
+    }
+
+
+    private void sideBarDisplay(LinearLayout layout) {
+        layout.removeAllViews();
+        TextView tv;
+        List<String> sideIndex = new ArrayList<>(legMap.keySet());
+        for (String index : sideIndex) {
+            tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.sidebar_index, null);
+            tv.setText(index);
+            tv.setOnClickListener(this);
+            layout.addView(tv);
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        TextView tmpTv = (TextView) view;
+            favLegIndex.setSelection(legMap.get(tmpTv.getText()));
+    }
+
+
+
+
+
+
     @Override
     public void onTabChanged(String s) {
 
@@ -241,5 +295,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             return l1.getName().compareTo(l2.getName());
         }
     };
+
+
 
 }
