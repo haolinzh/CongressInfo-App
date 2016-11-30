@@ -147,7 +147,8 @@ public class LegDetail extends AppCompatActivity {
                 String legFirstName = singleLeg.getString("first_name");
                 String legLastName = singleLeg.getString("last_name");
 
-                String legName = legTitle+". "+legFirstName + ", " + legLastName;
+                String legName = legTitle+". "+legLastName + ", " + legFirstName;
+                String legNameNoTitle=legLastName + ", " + legFirstName;
                 String legEmail=singleLeg.getString("oc_email");
                 String legChamber=singleLeg.getString("chamber");
                 String legContact=singleLeg.getString("phone");
@@ -192,6 +193,7 @@ public class LegDetail extends AppCompatActivity {
                 legDetail.add(legWebSite);
                 legDetail.add(legDistrict);
                 legDetail.add(legStateName);
+                legDetail.add(legNameNoTitle);
 
                 return legDetail;
 
@@ -351,7 +353,7 @@ public class LegDetail extends AppCompatActivity {
                         imgBlegFav.setBackgroundResource(R.drawable.yellow);
                         SharedPreferences.Editor e=sharedPref.edit();
 
-                        Leg favLeg=new Leg(legDetail.get(0),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
+                        Leg favLeg=new Leg(legDetail.get(16),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
 
                         String legJson = gson.toJson(favLeg);
                         MainActivity.favLeg.add(legJson);
@@ -374,7 +376,7 @@ public class LegDetail extends AppCompatActivity {
                         imgBlegFav.setBackgroundResource(R.drawable.fav);
                         SharedPreferences.Editor e=sharedPref.edit();
 
-                        Leg favLeg=new Leg(legDetail.get(0),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
+                        Leg favLeg=new Leg(legDetail.get(16),legDetail.get(10),legDetail.get(15),legDetail.get(14),id);
 
                         String legJson = gson.toJson(favLeg);
                         MainActivity.favLeg.remove(legJson);

@@ -13,7 +13,12 @@ import android.widget.TabHost;
 
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -66,6 +71,8 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Bill b = gson.fromJson(str, Bill.class);
             favBillList.add(b);
         }
+
+        Collections.sort(favBillList,billCmp);
         badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
         favBillView.setAdapter(badapter);
         favBillView.setOnItemClickListener(onItemClickListenerb);
@@ -78,7 +85,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Comm c = gson.fromJson(str, Comm.class);
             favCommList.add(c);
         }
-
+        Collections.sort(favCommList,commCmp);
         cadapter = new CommItemAdapter(getActivity().getApplicationContext(), favCommList);
         favCommView.setAdapter(cadapter);
         favCommView.setOnItemClickListener(onItemClickListenerc);
@@ -91,7 +98,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Leg l = gson.fromJson(str, Leg.class);
             favLegList.add(l);
         }
-
+        Collections.sort(favLegList,legCmp);
         ladapter = new LegItemAdapter(getActivity().getApplicationContext(), favLegList);
         favLegView.setAdapter(ladapter);
         favLegView.setOnItemClickListener(onItemClickListenerl);
@@ -127,6 +134,8 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Bill b = gson.fromJson(str, Bill.class);
             favBillList.add(b);
         }
+
+        Collections.sort(favBillList,billCmp);
         badapter = new BillItemAdapter(getActivity().getApplicationContext(), favBillList);
         favBillView.setAdapter(badapter);
         favBillView.setOnItemClickListener(onItemClickListenerb);
@@ -138,6 +147,8 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Comm c = gson.fromJson(str, Comm.class);
             favCommList.add(c);
         }
+
+        Collections.sort(favCommList,commCmp);
         cadapter = new CommItemAdapter(getActivity().getApplicationContext(), favCommList);
         favCommView.setAdapter(cadapter);
         favCommView.setOnItemClickListener(onItemClickListenerc);
@@ -149,7 +160,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
             Leg l = gson.fromJson(str, Leg.class);
             favLegList.add(l);
         }
-
+        Collections.sort(favLegList,legCmp);
         ladapter = new LegItemAdapter(getActivity().getApplicationContext(), favLegList);
         favLegView.setAdapter(ladapter);
         favLegView.setOnItemClickListener(onItemClickListenerl);
@@ -199,4 +210,36 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     public void onTabChanged(String s) {
 
     }
+
+    Comparator<Bill> billCmp=new Comparator<Bill>() {
+        @Override
+        public int compare(Bill b1, Bill b2) {
+            SimpleDateFormat sdf=new SimpleDateFormat("MMM dd,yyyy");
+            try {
+                Date d1=sdf.parse(b1.getBillDate());
+                Date d2=sdf.parse(b2.getBillDate());
+                return  d2.compareTo(d1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
+
+        }
+    };
+
+
+    Comparator<Comm> commCmp=new Comparator<Comm>() {
+        @Override
+        public int compare(Comm c1, Comm c2) {
+            return c1.getCommName().compareTo(c2.getCommName());
+        }
+    };
+
+    Comparator<Leg> legCmp = new Comparator<Leg>() {
+        @Override
+        public int compare(Leg l1, Leg l2) {
+            return l1.getName().compareTo(l2.getName());
+        }
+    };
+
 }

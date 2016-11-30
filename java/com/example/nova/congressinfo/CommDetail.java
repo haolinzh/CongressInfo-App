@@ -54,7 +54,7 @@ public class CommDetail extends AppCompatActivity {
         imgCCommFav= (ImageButton) findViewById(R.id.imgCCommFav);
         imgCCommChamber= (ImageView) findViewById(R.id.commDetChamber);
 
-        
+
 
         tvId.setText(comm.getCommId());
         tvName.setText(comm.getCommName());
