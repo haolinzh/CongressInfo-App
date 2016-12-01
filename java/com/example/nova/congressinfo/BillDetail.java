@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -229,14 +228,14 @@ public class BillDetail extends AppCompatActivity {
                         imgBBillFav.setBackgroundResource(R.drawable.yellow);
                         SharedPreferences.Editor e=sharedPref.edit();
                         Gson gson = new Gson();
-
                         Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
-
                         String billJson = gson.toJson(favBill);
 
-                        MainActivity.favBill.add(billJson);
 
+                        MainActivity.favBill.add(billJson);
                         e.putStringSet("favBillJson",MainActivity.favBill);
+
+
                         e.commit();
 
 
@@ -252,17 +251,16 @@ public class BillDetail extends AppCompatActivity {
                         imgBBillFav.setBackgroundResource(R.drawable.fav);
                         SharedPreferences.Editor e=sharedPref.edit();
                         Gson gson = new Gson();
-
                         Bill favBill=new Bill(id.toUpperCase(),billDetail.get(1),billDetail.get(6));
-
                         String billJson = gson.toJson(favBill);
-                        MainActivity.favBill.remove(billJson);
 
+                        MainActivity.favBill.remove(billJson);
                         e.putStringSet("favBillJson",MainActivity.favBill);
+
+
                         e.commit();
 
 
-                        Log.d("favbill",String.valueOf(MainActivity.favBill.size()));
 
 
                     }

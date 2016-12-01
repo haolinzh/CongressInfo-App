@@ -163,6 +163,16 @@ public class LegDetail extends AppCompatActivity {
                 String legDistrict=singleLeg.getString("district");
                 String legStateName=singleLeg.getString("state_name");
 
+                if(legEmail.equals("null")){
+                    legEmail="N.A";
+                }
+                if (legFax.equals("null")){
+                    legFax="N.A";
+                }
+
+
+
+
                 String legFbId="N.A";
                 String legTwId="N.A";
 
