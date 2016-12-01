@@ -43,7 +43,8 @@ public class CommItemAdapter extends ArrayAdapter {
         Comm comm=commItem.get(position);
         tvId.setText(comm.getCommId());
         tvName.setText(comm.getCommName());
-        tvChamber.setText(comm.getCommChamber());
+        tvChamber.setText( Character.toUpperCase(comm.getCommChamber().charAt(0)) + comm.getCommChamber().substring(1));
+
 
         return convertView;
     }

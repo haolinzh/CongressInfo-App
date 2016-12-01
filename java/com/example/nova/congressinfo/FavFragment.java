@@ -253,7 +253,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     @Override
     public void onClick(View view) {
         TextView tmpTv = (TextView) view;
-            favLegView.setSelection(legMap.get(tmpTv.getText()));
+        favLegView.setSelection(legMap.get(tmpTv.getText()));
     }
 
 

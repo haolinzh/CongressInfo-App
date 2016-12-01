@@ -126,6 +126,12 @@ public class BillDetail extends AppCompatActivity {
                 String billIntroduced = singleBill.getString("introduced_on");
                 billIntroduced=DateFormat.dateFormat(billIntroduced);
 
+                if (billStatus.equals("true")){
+                    billStatus="Active";
+                }else {
+                    billStatus="New";
+                }
+
                 String billCongressUrl = singleBill.getJSONObject("urls").getString("congress");
                 String billVerStatus = "N.A";
                 String billUrl="N.A";

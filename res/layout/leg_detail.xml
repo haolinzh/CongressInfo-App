@@ -257,6 +257,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
+
+
                     <ProgressBar
                         android:id="@+id/TermBar"
                         style="@style/CustomProgressBar"
@@ -271,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/progressNum"
                         android:layout_gravity="center_vertical|center_horizontal"
-                        android:paddingStart="60dp" />
+                        android:paddingStart="50dp" />
                 </FrameLayout>
 
             </TableRow>
