@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.example.nova.congressinfo.MainActivity.favLeg;
 import static com.example.nova.congressinfo.R.id.listViewFavBill;
 import static com.example.nova.congressinfo.R.id.listViewFavComm;
 import static com.example.nova.congressinfo.R.id.listViewFavLeg;
@@ -45,7 +46,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     ListView favLegView;
     ListView favBillView;
     ListView favCommView;
-    ListView favLegIndex;
+ //   ListView favLegIndex;
     BillItemAdapter badapter;
     CommItemAdapter cadapter;
     LegItemAdapter ladapter;
@@ -99,7 +100,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
 
 
 
-        Iterator<String> legitr = MainActivity.favLeg.iterator();
+        Iterator<String> legitr = favLeg.iterator();
         while(legitr.hasNext()){
             String str = legitr.next();
             Leg l = gson.fromJson(str, Leg.class);
@@ -128,6 +129,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favLegView = (ListView) layout.findViewById(listViewFavLeg);
         favBillView = (ListView) layout.findViewById(listViewFavBill);
         favCommView = (ListView) layout.findViewById(listViewFavComm);
+
 
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("LEGISLATORS").setContent(R.id.tabFavLeg));
@@ -164,7 +166,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         favCommView.setOnItemClickListener(onItemClickListenerc);
 
 
-        Iterator<String> legitr = MainActivity.favLeg.iterator();
+        Iterator<String> legitr = favLeg.iterator();
         while(legitr.hasNext()){
             String str = legitr.next();
             Leg l = gson.fromJson(str, Leg.class);
@@ -174,7 +176,6 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         ladapter = new LegItemAdapter(getActivity().getApplicationContext(), favLegList);
         favLegView.setAdapter(ladapter);
         favLegView.setOnItemClickListener(onItemClickListenerl);
-
 
 
 
@@ -227,7 +228,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         legMap = new TreeMap<>();
         for (int i = 0; i < list.size(); i++) {
             Leg leg = list.get(i);
-            String index = leg.getState().substring(0, 1);
+            String index = leg.getName().substring(0, 1);
             if (!legMap.containsKey(index)) {
                 legMap.put(index, i);
             }
@@ -252,7 +253,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
     @Override
     public void onClick(View view) {
         TextView tmpTv = (TextView) view;
-            favLegIndex.setSelection(legMap.get(tmpTv.getText()));
+            favLegView.setSelection(legMap.get(tmpTv.getText()));
     }
 
 
