@@ -50,13 +50,13 @@ public class CommFragment extends Fragment implements  TabHost.OnTabChangeListen
 
 
         CommHouseTask houseTask=new CommHouseTask();
-        houseTask.execute("http://104.198.0.197:8080/committees?chamber=house&apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=all");
+        houseTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqcommittee&chamber=house");
 
         CommSenateTask senateTask=new CommSenateTask();
-        senateTask.execute("http://104.198.0.197:8080/committees?chamber=senate&apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=all");
+        senateTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqcommittee&chamber=senate");
 
         CommJointTask jointTask=new CommJointTask();
-        jointTask.execute("http://104.198.0.197:8080/committees?chamber=joint&apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=all");
+        jointTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqcommittee&chamber=joint");
 
     }
 

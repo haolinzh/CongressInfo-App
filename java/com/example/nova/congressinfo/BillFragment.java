@@ -49,10 +49,10 @@ public class BillFragment extends Fragment implements TabHost.OnTabChangeListene
         newBillList=new ArrayList<>();
 
         ActiveTask actask = new ActiveTask();
-        actask.execute("http://104.198.0.197:8080/bills?apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=50&history.active=true");
+        actask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqbills&active=true");
 
         NewTask nwtask=new NewTask();
-        nwtask.execute("http://104.198.0.197:8080/bills?apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a&per_page=50&history.active=false");
+        nwtask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqbills&active=false");
 
 
     }

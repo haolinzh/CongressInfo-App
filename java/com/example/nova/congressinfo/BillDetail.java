@@ -63,7 +63,7 @@ public class BillDetail extends AppCompatActivity {
 
 
         DetBTask detBTask = new DetBTask();
-        detBTask.execute("http://104.198.0.197:8080/bills?bill_id=" + id + "&apikey=3e10ee5ae4ca4e5f884cbedf3ef2372a");
+        detBTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqbills&billid="+id);
 
 
     }

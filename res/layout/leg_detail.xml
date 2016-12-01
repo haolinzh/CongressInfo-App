@@ -112,7 +112,7 @@
                 android:paddingRight="5dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Email:"
@@ -121,7 +121,7 @@
 
                 <TextView
                     android:id="@+id/detEmail"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
@@ -249,16 +249,30 @@
                     android:layout_weight="1"
                     android:text="Term:"
                     android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    />
 
-                <ProgressBar
-                    android:id="@+id/TermBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:progress="60" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ProgressBar
+                        android:id="@+id/TermBar"
+                        style="@style/CustomProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="60"
+                        android:layout_gravity="end" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressNum"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:paddingStart="60dp" />
+                </FrameLayout>
 
             </TableRow>
 
@@ -271,7 +285,7 @@
                 android:paddingRight="5dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Office:"
@@ -280,7 +294,7 @@
 
                 <TextView
                     android:id="@+id/detOffice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="18sp"

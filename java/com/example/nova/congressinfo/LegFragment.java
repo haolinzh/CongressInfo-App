@@ -58,13 +58,13 @@ public class LegFragment extends Fragment implements TabHost.OnTabChangeListener
         legSenateList = new ArrayList<>();
 
         LegTask legtask = new LegTask();
-        legtask.execute("http://104.198.0.197:8080/legislators?apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
+        legtask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqlegislator");
 
         LegHouseTask legHouseTask = new LegHouseTask();
-        legHouseTask.execute("http://104.198.0.197:8080/legislators?chamber=house&apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
+        legHouseTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqlegislator&chamber=house");
 
         LegSenateTask legSenateTask = new LegSenateTask();
-        legSenateTask.execute("http://104.198.0.197:8080/legislators?chamber=senate&apikey=4acd972a599843bd93ea4dba171a483f&per_page=all");
+        legSenateTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqlegislator&chamber=senate");
     }
 
 

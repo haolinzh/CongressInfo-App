@@ -54,6 +54,7 @@ public class LegDetail extends AppCompatActivity {
     TextView tvFax;
     TextView tvBirthday;
     TextView tvParty;
+    TextView tvProgressNum;
     ImageView imgParty;
     ProgressBar termProgress;
     ImageView imgDet;
@@ -81,7 +82,7 @@ public class LegDetail extends AppCompatActivity {
         Log.d("id",id);
 
         DetTask detTask=new DetTask();
-        detTask.execute("http://104.198.0.197:8080/legislators?bioguide_id="+id+"&apikey=4acd972a599843bd93ea4dba171a483f");
+        detTask.execute("http://congressinfo-env.us-west-2.elasticbeanstalk.com/index.php?request=reqlegislator&bioid="+id);
 
     }
 
@@ -239,9 +240,11 @@ public class LegDetail extends AppCompatActivity {
             imgBlegFB= (ImageButton) findViewById(R.id.legDetImgBFB);
             imgBlegTW= (ImageButton) findViewById(R.id.legDetImgBTW);
             imgBlegWeb= (ImageButton) findViewById(R.id.legDetImgBWeb);
+            tvProgressNum= (TextView) findViewById(R.id.progressNum);
 
            int percent= calTermPercent(legDetail.get(4),legDetail.get(5));
 
+            tvProgressNum.setText(percent+"%");
 
             tvName.setText(legDetail.get(0));
             tvEmail.setText(legDetail.get(1));
